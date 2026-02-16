@@ -1,0 +1,550 @@
+{
+  "summary": {
+    "total_cases": 25,
+    "retrieval_hit_rate": 1.0,
+    "citation_precision": 1.0,
+    "citation_recall": 1.0,
+    "groundedness_rate": 1.0,
+    "retrieval_latency_ms": {
+      "p50": 214.81,
+      "p95": 276.18,
+      "avg": 221.75
+    },
+    "generation_latency_ms": {
+      "p50": 1339.92,
+      "p95": 2190.5,
+      "avg": 1294.1
+    }
+  },
+  "cases": [
+    {
+      "id": "tc-001",
+      "query": "What is the refund policy?",
+      "expected_doc_ids": [
+        "5"
+      ],
+      "retrieved_doc_ids": [
+        "5",
+        "4",
+        "3",
+        "2",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:5"
+      ],
+      "answer_preview": "우리 회사의 환불 정책은 다음과 같습니다 [doc:5]:\n\n- 배달 후 24시간 이내에 음식이 상했거나 잘못 배달되었거나 누락된 경우 환불을 요청할 수 있습니다.\n- 사진 증거가 필요할 수 있습니다.\n- 환불은 원래 결제 방식으로 3-5 영업일 내에 처리됩니다.",
+      "retrieval_latency_ms": 276.18,
+      "generation_latency_ms": 1822.27
+    },
+    {
+      "id": "tc-002",
+      "query": "How many hours do I have to request a refund?",
+      "expected_doc_ids": [
+        "5"
+      ],
+      "retrieved_doc_ids": [
+        "5",
+        "4",
+        "3",
+        "1",
+        "2"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:5"
+      ],
+      "answer_preview": "우리 회사의 환불 정책에 따르면, 배달 후 24시간 이내에 환불을 요청할 수 있습니다. [doc:5]",
+      "retrieval_latency_ms": 225.39,
+      "generation_latency_ms": 794.74
+    },
+    {
+      "id": "tc-003",
+      "query": "Do you need photo evidence for refunds?",
+      "expected_doc_ids": [
+        "5"
+      ],
+      "retrieved_doc_ids": [
+        "5",
+        "1",
+        "4",
+        "2",
+        "3"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:5"
+      ],
+      "answer_preview": "네, [doc:5]에 따르면 \"Photo evidence may be required\"라고 명시되어 있습니다. 따라서 사진 증거가 필요할 수 있습니다.",
+      "retrieval_latency_ms": 216.94,
+      "generation_latency_ms": 798.47
+    },
+    {
+      "id": "tc-004",
+      "query": "What are the delivery areas?",
+      "expected_doc_ids": [
+        "3"
+      ],
+      "retrieved_doc_ids": [
+        "3",
+        "4",
+        "5",
+        "2",
+        "1",
+        "6"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:3"
+      ],
+      "answer_preview": "배달 가능 지역은 다음과 같습니다:\n\n- 서울: 서울 전 지역 [doc:3]\n- 경기도: 분당, 일산 등 일부 지역 [doc:3] \n- 인천: 인천 시내 [doc:3]\n\n배달료는 거리와 식당 파트너의 최소 주문 금액에 따라 다릅니다. 정확한 배달 범위는 해당 식당에 문의해 주시기 바랍니다. [doc:3]",
+      "retrieval_latency_ms": 217.56,
+      "generation_latency_ms": 1620.3
+    },
+    {
+      "id": "tc-005",
+      "query": "Do you deliver to Incheon?",
+      "expected_doc_ids": [
+        "3"
+      ],
+      "retrieved_doc_ids": [
+        "3",
+        "4",
+        "6",
+        "2",
+        "5",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:3"
+      ],
+      "answer_preview": "네, 저희는 인천 시내 지역으로 배달 서비스를 제공하고 있습니다. [doc:3]에 따르면 \"인천: 인천 시내 지역으로 배달합니다.\"라고 명시되어 있습니다.",
+      "retrieval_latency_ms": 212.3,
+      "generation_latency_ms": 1719.94
+    },
+    {
+      "id": "tc-006",
+      "query": "Do you deliver to Bundang and Ilsan?",
+      "expected_doc_ids": [
+        "3"
+      ],
+      "retrieved_doc_ids": [
+        "3",
+        "4",
+        "6",
+        "2",
+        "5",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:3"
+      ],
+      "answer_preview": "네, 우리 회사는 경기도 일부 지역인 분당과 일산으로 배달 서비스를 제공하고 있습니다. [doc:3]",
+      "retrieval_latency_ms": 364.19,
+      "generation_latency_ms": 1173.43
+    },
+    {
+      "id": "tc-007",
+      "query": "What are your ordering hours?",
+      "expected_doc_ids": [
+        "4"
+      ],
+      "retrieved_doc_ids": [
+        "4",
+        "3",
+        "5",
+        "2",
+        "1",
+        "6"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:4"
+      ],
+      "answer_preview": "주문 가능 시간은 다음과 같습니다 [doc:4]:\n\n\"Ordering hours: 10:00-23:00 daily.\"",
+      "retrieval_latency_ms": 207.14,
+      "generation_latency_ms": 800.32
+    },
+    {
+      "id": "tc-008",
+      "query": "Is there a peak-hour fee?",
+      "expected_doc_ids": [
+        "4"
+      ],
+      "retrieved_doc_ids": [
+        "4",
+        "3",
+        "5",
+        "2",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:4"
+      ],
+      "answer_preview": "네, 주말 저녁 시간대(금요일-일요일 18:00-21:00)에는 피크 시간 요금이 부과될 수 있습니다. [doc:4]",
+      "retrieval_latency_ms": 199.76,
+      "generation_latency_ms": 821.13
+    },
+    {
+      "id": "tc-009",
+      "query": "How long does delivery take?",
+      "expected_doc_ids": [
+        "4"
+      ],
+      "retrieved_doc_ids": [
+        "3",
+        "4",
+        "5",
+        "2",
+        "1",
+        "6"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:4"
+      ],
+      "answer_preview": "배달 시간은 지역과 교통 상황에 따라 30-60분 정도 소요됩니다. [doc:4]",
+      "retrieval_latency_ms": 223.71,
+      "generation_latency_ms": 742.39
+    },
+    {
+      "id": "tc-010",
+      "query": "How can I update my payment method?",
+      "expected_doc_ids": [
+        "1"
+      ],
+      "retrieved_doc_ids": [
+        "1",
+        "2"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:1"
+      ],
+      "answer_preview": "고객님, 결제 수단을 업데이트하시려면 계정 탭을 열어주시면 됩니다. [doc:1]",
+      "retrieval_latency_ms": 198.63,
+      "generation_latency_ms": 891.4
+    },
+    {
+      "id": "tc-011",
+      "query": "I have two-factor login issues. What should I do?",
+      "expected_doc_ids": [
+        "1"
+      ],
+      "retrieved_doc_ids": [
+        "1",
+        "5",
+        "2",
+        "4"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:1"
+      ],
+      "answer_preview": "고객님, 두 단계 인증 로그인 문제가 있으시다고 하셨습니다. 이 경우 백업 코드를 사용하거나 고객 지원팀에 문의하시는 것이 좋습니다. [doc:1]에 따르면 \"For two-factor login issues, use backup codes or contact support.\"라고 되어 있습니다. 어떤 방법으로 도와드릴까요?",
+      "retrieval_latency_ms": 201.65,
+      "generation_latency_ms": 1445.18
+    },
+    {
+      "id": "tc-012",
+      "query": "What allergens should customers watch for?",
+      "expected_doc_ids": [
+        "2"
+      ],
+      "retrieved_doc_ids": [
+        "2",
+        "6",
+        "4",
+        "1",
+        "3",
+        "5"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:2"
+      ],
+      "answer_preview": "고객님, 알레르기 정보는 다음과 같습니다 [doc:2]:\n\n일반적인 알레르기 유발 성분으로는 땅콩, 갑각류, 대두, 유제품, 밀 등이 있습니다. 고객님께서는 '땅콩 기름 없음' 또는 '갑각류 없음' 등의 요청을 할 수 있지만, 교차 오염이 발생할 수 있습니다.",
+      "retrieval_latency_ms": 195.74,
+      "generation_latency_ms": 1993.78
+    },
+    {
+      "id": "tc-013",
+      "query": "Can I request no peanut oil?",
+      "expected_doc_ids": [
+        "2"
+      ],
+      "retrieved_doc_ids": [
+        "2",
+        "6",
+        "5",
+        "3",
+        "4",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:2"
+      ],
+      "answer_preview": "네, 고객님께서 '무땅콩기름' 요청을 하실 수 있습니다. [doc:2]에 따르면 고객들은 '땅콩기름 없음' 또는 '갑각류 없음' 등의 요청을 할 수 있습니다. 다만 교차오염이 발생할 수 있다고 명시되어 있습니다.",
+      "retrieval_latency_ms": 207.78,
+      "generation_latency_ms": 1461.27
+    },
+    {
+      "id": "tc-014",
+      "query": "Tell me about Myeongdong Kimbap.",
+      "expected_doc_ids": [
+        "6"
+      ],
+      "retrieved_doc_ids": [
+        "6",
+        "3",
+        "2"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:6",
+        "doc:3"
+      ],
+      "answer_preview": "마이엉동 김밥에 대해 알려드리겠습니다.\n\n마이엉동 김밥은 서울 중구에 위치한 한식 레스토랑입니다. [doc:6] 영업 시간은 10:00-22:00이며, 서울 전역에 배달 서비스를 제공합니다. [doc:3] 주요 메뉴는 김밥이며, 땅콩과 콩 알레르기가 있는 고객들은 주의가 필요합니다.",
+      "retrieval_latency_ms": 210.1,
+      "generation_latency_ms": 1745.65
+    },
+    {
+      "id": "tc-015",
+      "query": "Which district is Myeongdong Kimbap in?",
+      "expected_doc_ids": [
+        "6"
+      ],
+      "retrieved_doc_ids": [
+        "6",
+        "3",
+        "2"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:6"
+      ],
+      "answer_preview": "根據提供的資訊,Myeongdong Kimbap餐廳位於Jung-gu區[doc:6]。",
+      "retrieval_latency_ms": 218.93,
+      "generation_latency_ms": 721.61
+    },
+    {
+      "id": "tc-016",
+      "query": "What are Myeongdong Kimbap operating hours?",
+      "expected_doc_ids": [
+        "6"
+      ],
+      "retrieved_doc_ids": [
+        "6",
+        "4",
+        "3",
+        "5",
+        "2"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:6"
+      ],
+      "answer_preview": "식당 Myeongdong Kimbap의 운영 시간은 다음과 같습니다 [doc:6]:\n\n\"Hours: 10:00-22:00\"",
+      "retrieval_latency_ms": 200.43,
+      "generation_latency_ms": 764.93
+    },
+    {
+      "id": "tc-017",
+      "query": "환불 정책이 어떻게 되나요?",
+      "expected_doc_ids": [
+        "5"
+      ],
+      "retrieved_doc_ids": [
+        "5",
+        "3",
+        "4",
+        "1",
+        "2",
+        "6"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:5"
+      ],
+      "answer_preview": "환불 정책에 대한 정보는 다음과 같습니다 [doc:5]:\n\n- 배달 후 24시간 이내에 음식이 상했거나 잘못 배달되었거나 누락된 경우 환불 요청이 가능합니다.\n- 사진 증거가 필요할 수 있습니다.\n- 환불은 원래 결제 수단으로 3-5 영업일 내에 처리됩니다.",
+      "retrieval_latency_ms": 234.85,
+      "generation_latency_ms": 2268.8
+    },
+    {
+      "id": "tc-018",
+      "query": "배달 가능 지역 알려주세요.",
+      "expected_doc_ids": [
+        "3"
+      ],
+      "retrieved_doc_ids": [
+        "3",
+        "4",
+        "6",
+        "5",
+        "2",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:3"
+      ],
+      "answer_preview": "네, 배달 가능 지역은 다음과 같습니다. [doc:3]\n\n- 서울: 서울 전 지역 배달 가능\n- 경기도: 분당, 일산 등 일부 지역 배달 가능\n- 인천: 인천 시내 지역 배달 가능\n\n배달 요금은 거리와 식당 파트너의 최소 주문 금액에 따라 다릅니다. 특정 지역의 정확한 배달 범위는 해당 식당에 문의해 주시기 바랍니다.",
+      "retrieval_latency_ms": 236.68,
+      "generation_latency_ms": 1669.47
+    },
+    {
+      "id": "tc-019",
+      "query": "인천 배달되나요?",
+      "expected_doc_ids": [
+        "3"
+      ],
+      "retrieved_doc_ids": [
+        "3",
+        "4",
+        "6",
+        "5",
+        "2",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:3"
+      ],
+      "answer_preview": "네, 인천 시내 지역으로 배달이 가능합니다. [doc:3]에 따르면 \"인천: 인천 시내 지역으로 배달합니다.\"라고 명시되어 있습니다.",
+      "retrieval_latency_ms": 228.59,
+      "generation_latency_ms": 1403.89
+    },
+    {
+      "id": "tc-020",
+      "query": "주문 가능 시간은 언제인가요?",
+      "expected_doc_ids": [
+        "4"
+      ],
+      "retrieved_doc_ids": [
+        "4",
+        "3",
+        "5",
+        "2",
+        "6",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:4"
+      ],
+      "answer_preview": "주문 가능 시간은 다음과 같습니다 [doc:4]:\n\n- 매일 10:00-23:00",
+      "retrieval_latency_ms": 219.28,
+      "generation_latency_ms": 847.06
+    },
+    {
+      "id": "tc-021",
+      "query": "피크 시간 추가 요금이 있나요?",
+      "expected_doc_ids": [
+        "4"
+      ],
+      "retrieved_doc_ids": [
+        "4",
+        "3",
+        "5",
+        "6",
+        "2",
+        "1"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:4"
+      ],
+      "answer_preview": "네, 피크 시간 추가 요금이 있습니다. [doc:4]에 따르면 금요일부터 일요일까지 18:00-21:00 사이에 피크 시간 요금이 부과될 수 있습니다.",
+      "retrieval_latency_ms": 219.88,
+      "generation_latency_ms": 957.16
+    },
+    {
+      "id": "tc-022",
+      "query": "계정에서 결제수단 변경은 어떻게 하나요?",
+      "expected_doc_ids": [
+        "1"
+      ],
+      "retrieved_doc_ids": [
+        "1",
+        "3",
+        "2"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:1"
+      ],
+      "answer_preview": "결제수단 변경은 계정 탭에서 할 수 있습니다. [doc:1]\n\n계정 탭에서 결제수단 정보를 업데이트할 수 있습니다.",
+      "retrieval_latency_ms": 205.43,
+      "generation_latency_ms": 893.05
+    },
+    {
+      "id": "tc-023",
+      "query": "알레르기 정보는 어디서 확인하나요?",
+      "expected_doc_ids": [
+        "2"
+      ],
+      "retrieved_doc_ids": [
+        "2",
+        "6",
+        "3",
+        "1",
+        "5",
+        "4"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:2"
+      ],
+      "answer_preview": "알레르기 정보는 다음과 같이 확인할 수 있습니다:\n\n[doc:2] 에 따르면 \"알레르기 정보는 레스토랑에서 제공합니다. 일반적인 알레르기 유발 성분은 땅콩, 해산물, 콩, 유제품, 밀 등입니다. 고객은 '땅콩 기름 사용 금지' 또는 '해산물 사용 금지' 요청을 할 수 있지만, 교차 오염이 발생할 수 있습니다.\"\n\n따라서 주문하시기 전에 레스토랑에 직접 확인하시는 것이 가장 좋습니다. 혹시 추가로 궁금한 점이 있으신가요?",
+      "retrieval_latency_ms": 203.22,
+      "generation_latency_ms": 2190.5
+    },
+    {
+      "id": "tc-024",
+      "query": "명동김밥 식당 정보 알려줘.",
+      "expected_doc_ids": [
+        "6"
+      ],
+      "retrieved_doc_ids": [
+        "6",
+        "2",
+        "3",
+        "5",
+        "4"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:6"
+      ],
+      "answer_preview": "네, 명동김밥 식당 정보는 다음과 같습니다:\n\n[doc:6]\n- 식당명: 명동김밥\n- 지역: 중구\n- 카테고리: 한식\n- 영업시간: 10:00-22:00\n- 배달 지역: 서울\n- 알레르기 정보: 땅콩, 콩\n\n이 식당은 인기 있는 김밥 전문점으로 알려져 있습니다.",
+      "retrieval_latency_ms": 214.81,
+      "generation_latency_ms": 1465.97
+    },
+    {
+      "id": "tc-025",
+      "query": "환불은 며칠 내 처리되나요?",
+      "expected_doc_ids": [
+        "5"
+      ],
+      "retrieved_doc_ids": [
+        "5",
+        "4",
+        "3",
+        "1",
+        "2"
+      ],
+      "hit": true,
+      "citations": [
+        "doc:5"
+      ],
+      "answer_preview": "환불 정책에 따르면 [doc:5] 배달 후 24시간 내에 환불 요청을 하면 처리가 가능하며, 사진 증거가 필요할 수 있습니다. 환불은 원래 결제 수단으로 3-5 영업일 내에 처리된다고 명시되어 있습니다.",
+      "retrieval_latency_ms": 204.69,
+      "generation_latency_ms": 1339.92
+    }
+  ]
+}

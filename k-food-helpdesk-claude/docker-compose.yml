@@ -1,0 +1,60 @@
+services:
+  db:
+    image: ankane/pgvector
+    container_name: kfh_claude_db
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER} -d ${PGDATABASE}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/00_schema.sql:ro
+
+  server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    container_name: kfh_claude_server
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8020:8000"
+
+  web:
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
+    container_name: kfh_claude_web
+    env_file:
+      - .env
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8020
+    depends_on:
+      - server
+    ports:
+      - "3002:3000"
+
+  indexer:
+    build:
+      context: .
+      dockerfile: ./indexer/Dockerfile
+    container_name: kfh_claude_indexer
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["bash", "-lc", "python indexer/ingest.py"]
+
+volumes:
+  dbdata:

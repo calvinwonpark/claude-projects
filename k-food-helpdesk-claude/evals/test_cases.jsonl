@@ -1,0 +1,25 @@
+{"id":"tc-001","query":"What is the refund policy?","expected_doc_ids":["5"],"language":"en","notes":"refund core"}
+{"id":"tc-002","query":"How many hours do I have to request a refund?","expected_doc_ids":["5"],"language":"en","notes":"refund window"}
+{"id":"tc-003","query":"Do you need photo evidence for refunds?","expected_doc_ids":["5"],"language":"en","notes":"refund evidence"}
+{"id":"tc-004","query":"What are the delivery areas?","expected_doc_ids":["3"],"language":"en","notes":"delivery regions"}
+{"id":"tc-005","query":"Do you deliver to Incheon?","expected_doc_ids":["3"],"language":"en","notes":"incheon"}
+{"id":"tc-006","query":"Do you deliver to Bundang and Ilsan?","expected_doc_ids":["3"],"language":"en","notes":"gyeonggi"}
+{"id":"tc-007","query":"What are your ordering hours?","expected_doc_ids":["4"],"language":"en","notes":"hours"}
+{"id":"tc-008","query":"Is there a peak-hour fee?","expected_doc_ids":["4"],"language":"en","notes":"fees"}
+{"id":"tc-009","query":"How long does delivery take?","expected_doc_ids":["4"],"language":"en","notes":"delivery time"}
+{"id":"tc-010","query":"How can I update my payment method?","expected_doc_ids":["1"],"language":"en","notes":"account help"}
+{"id":"tc-011","query":"I have two-factor login issues. What should I do?","expected_doc_ids":["1"],"language":"en","notes":"2fa"}
+{"id":"tc-012","query":"What allergens should customers watch for?","expected_doc_ids":["2"],"language":"en","notes":"allergens"}
+{"id":"tc-013","query":"Can I request no peanut oil?","expected_doc_ids":["2"],"language":"en","notes":"allergen request"}
+{"id":"tc-014","query":"Tell me about Myeongdong Kimbap.","expected_doc_ids":["6"],"language":"en","notes":"restaurant profile"}
+{"id":"tc-015","query":"Which district is Myeongdong Kimbap in?","expected_doc_ids":["6"],"language":"en","notes":"restaurant district"}
+{"id":"tc-016","query":"What are Myeongdong Kimbap operating hours?","expected_doc_ids":["6"],"language":"en","notes":"restaurant hours"}
+{"id":"tc-017","query":"환불 정책이 어떻게 되나요?","expected_doc_ids":["5"],"language":"ko","notes":"refund ko"}
+{"id":"tc-018","query":"배달 가능 지역 알려주세요.","expected_doc_ids":["3"],"language":"ko","notes":"delivery ko"}
+{"id":"tc-019","query":"인천 배달되나요?","expected_doc_ids":["3"],"language":"ko","notes":"incheon ko"}
+{"id":"tc-020","query":"주문 가능 시간은 언제인가요?","expected_doc_ids":["4"],"language":"ko","notes":"hours ko"}
+{"id":"tc-021","query":"피크 시간 추가 요금이 있나요?","expected_doc_ids":["4"],"language":"ko","notes":"fee ko"}
+{"id":"tc-022","query":"계정에서 결제수단 변경은 어떻게 하나요?","expected_doc_ids":["1"],"language":"ko","notes":"account ko"}
+{"id":"tc-023","query":"알레르기 정보는 어디서 확인하나요?","expected_doc_ids":["2"],"language":"ko","notes":"allergens ko"}
+{"id":"tc-024","query":"명동김밥 식당 정보 알려줘.","expected_doc_ids":["6"],"language":"ko","notes":"restaurant ko"}
+{"id":"tc-025","query":"환불은 며칠 내 처리되나요?","expected_doc_ids":["5"],"language":"ko","notes":"refund processing ko"}
