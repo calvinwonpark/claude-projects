@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Founder Copilot Claude</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      width: 100%;
+      max-width: 920px;
+      height: 90vh;
+      max-height: 820px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      padding: 22px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .header h1 { font-size: 24px; font-weight: 650; }
+    .header p { font-size: 13px; opacity: 0.95; margin-top: 4px; }
+    .reset-btn {
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border-radius: 12px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 550;
+    }
+    .chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 22px;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .welcome {
+      text-align: center;
+      color: #555;
+      margin-top: 30px;
+    }
+    .welcome h2 { font-size: 20px; color: #333; margin-bottom: 10px; }
+    .examples { margin: 20px auto 0; max-width: 540px; display: grid; gap: 8px; }
+    .example {
+      border: 1px solid #e2e2e2;
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .example:hover { border-color: #667eea; background: #f6f8ff; }
+    .message { display: flex; gap: 10px; max-width: 86%; }
+    .message.user { align-self: flex-end; flex-direction: row-reverse; }
+    .message.assistant { align-self: flex-start; }
+    .avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff;
+      flex-shrink: 0;
+    }
+    .message.user .avatar { background: #5568e9; }
+    .message.assistant .avatar { background: #ef5a84; }
+    .content {
+      border-radius: 16px;
+      padding: 12px 14px;
+      line-height: 1.55;
+      word-wrap: break-word;
+      font-size: 14px;
+    }
+    .message.user .content {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .message.assistant .content {
+      background: #fff;
+      color: #333;
+      border: 1px solid #e4e4e4;
+      border-bottom-left-radius: 4px;
+    }
+    .meta {
+      margin-top: 8px;
+      color: #666;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+    .sources {
+      margin-top: 10px;
+      border-top: 1px solid #ebeef9;
+      padding-top: 10px;
+    }
+    .source-item {
+      border-left: 3px solid #667eea;
+      background: #f9faff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+    .source-name { font-weight: 650; color: #4f60d8; margin-bottom: 4px; }
+    .viz-wrap {
+      margin-top: 10px;
+      border-top: 1px solid #ebeef9;
+      padding-top: 10px;
+    }
+    .viz-title { font-size: 12px; font-weight: 650; color: #4f60d8; margin-bottom: 8px; }
+    .viz-box { background: #fff; border: 1px solid #e4e4e4; border-radius: 8px; padding: 8px; overflow-x: auto; }
+    .input {
+      border-top: 1px solid #ececec;
+      background: #fff;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+    }
+    .input-row { display: flex; gap: 10px; align-items: center; }
+    .file-tools { display: flex; align-items: center; gap: 8px; }
+    #fileInput { display: none; }
+    .file-btn {
+      border: 1px dashed #b9c3ff;
+      color: #4f60d8;
+      background: #f6f8ff;
+      border-radius: 20px;
+      padding: 9px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .file-list { display: flex; flex-wrap: wrap; gap: 6px; min-height: 8px; }
+    .file-chip {
+      font-size: 12px;
+      background: #f0f2ff;
+      color: #3f4ec5;
+      border: 1px solid #dbe0ff;
+      border-radius: 14px;
+      padding: 4px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .file-chip button {
+      border: none;
+      background: transparent;
+      color: #6b76d8;
+      cursor: pointer;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1;
+    }
+    #msg {
+      flex: 1;
+      border: 2px solid #e3e3e3;
+      border-radius: 24px;
+      padding: 12px 16px;
+      font-size: 14px;
+      outline: none;
+    }
+    #msg:focus { border-color: #667eea; }
+    #send {
+      border: none;
+      border-radius: 24px;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #send:disabled { opacity: 0.7; cursor: not-allowed; }
+    @media (max-width: 768px) {
+      body { padding: 0; }
+      .container { border-radius: 0; height: 100vh; max-height: 100vh; }
+      .message { max-width: 92%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Founder Copilot Claude</h1>
+        <p>Multi-agent startup advisor with grounding and routing trace</p>
+      </div>
+      <button id="reset" class="reset-btn">New Session</button>
+    </div>
+    <div id="chat" class="chat">
+      <div class="welcome" id="welcome">
+        <h2>Welcome</h2>
+        <p>Ask startup, GTM, product, technical architecture, or fundraising questions.</p>
+        <div class="examples">
+          <button class="example" onclick="sendExample('I am a solo founder. How do I get my first 10 users?')">I am a solo founder. How do I get my first 10 users?</button>
+          <button class="example" onclick="sendExample('What should I include in a pre-seed pitch deck?')">What should I include in a pre-seed pitch deck?</button>
+          <button class="example" onclick="sendExample('How should we design our API for long-term scale?')">How should we design our API for long-term scale?</button>
+        </div>
+      </div>
+    </div>
+    <div class="input">
+      <div class="input-row">
+        <div class="file-tools">
+          <input type="file" id="fileInput" multiple accept=".csv,.txt,.md,.json"/>
+          <label for="fileInput" class="file-btn">Attach file</label>
+        </div>
+        <input id="msg" placeholder="Type your question..." autocomplete="off"/>
+        <button id="send">Send</button>
+      </div>
+      <div id="fileList" class="file-list"></div>
+    </div>
+  </div>
+<script>
+  const chat = document.getElementById("chat");
+  const input = document.getElementById("msg");
+  const sendBtn = document.getElementById("send");
+  const resetBtn = document.getElementById("reset");
+  const fileInput = document.getElementById("fileInput");
+  const fileList = document.getElementById("fileList");
+  let selectedFiles = [];
+  let controller = null;
+
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text || "";
+    return div.innerHTML;
+  }
+
+  function removeWelcome() {
+    const welcome = document.getElementById("welcome");
+    if (welcome) welcome.remove();
+  }
+
+  function addMessage(role, text) {
+    removeWelcome();
+    const row = document.createElement("div");
+    row.className = `message ${role}`;
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = role === "user" ? "U" : "AI";
+
+    const body = document.createElement("div");
+    const content = document.createElement("div");
+    content.className = "content";
+    content.innerHTML = escapeHtml(text).replace(/\n/g, "<br>");
+    body.appendChild(content);
+
+    row.appendChild(avatar);
+    row.appendChild(body);
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
+    return { row, body, content };
+  }
+
+  function updateFileList() {
+    fileList.innerHTML = "";
+    for (let i = 0; i < selectedFiles.length; i += 1) {
+      const f = selectedFiles[i];
+      const chip = document.createElement("div");
+      chip.className = "file-chip";
+      chip.innerHTML = `<span>${escapeHtml(f.name)}</span>`;
+      const btn = document.createElement("button");
+      btn.textContent = "x";
+      btn.onclick = () => {
+        selectedFiles.splice(i, 1);
+        updateFileList();
+      };
+      chip.appendChild(btn);
+      fileList.appendChild(chip);
+    }
+  }
+
+  function renderSources(body, sources) {
+    if (!Array.isArray(sources) || !sources.length) return;
+    const sourcesWrap = document.createElement("div");
+    sourcesWrap.className = "sources";
+    const title = document.createElement("div");
+    title.className = "meta";
+    title.textContent = `Sources (${sources.length})`;
+    sourcesWrap.appendChild(title);
+    for (const s of sources) {
+      const item = document.createElement("div");
+      item.className = "source-item";
+      item.innerHTML =
+        `<div class="source-name">${escapeHtml(s.filename || s.file_id || "source")}</div>` +
+        `<div>${escapeHtml((s.quote || "").slice(0, 300))}</div>`;
+      sourcesWrap.appendChild(item);
+    }
+    body.appendChild(sourcesWrap);
+  }
+
+  async function renderVisualization(body, visualization) {
+    if (!visualization) return;
+    const wrap = document.createElement("div");
+    wrap.className = "viz-wrap";
+    const title = document.createElement("div");
+    title.className = "viz-title";
+    title.textContent = visualization.title || "Visualization";
+    const box = document.createElement("div");
+    box.className = "viz-box";
+    const container = document.createElement("div");
+    const id = `viz-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+    container.id = id;
+    box.appendChild(container);
+    wrap.appendChild(title);
+    wrap.appendChild(box);
+    body.appendChild(wrap);
+    try {
+      if (visualization.format === "vega_lite" && visualization.spec && window.vegaEmbed) {
+        await window.vegaEmbed(`#${id}`, visualization.spec, { actions: false, renderer: "svg" });
+      } else {
+        container.textContent = "Visualization format not supported.";
+      }
+    } catch (e) {
+      container.textContent = "Failed to render chart.";
+    }
+  }
+
+  function renderMeta(body, ev) {
+    const rt = ev.routing_trace || {};
+    const citations = (ev.citations || []).join(", ");
+    const meta = [
+      `Agent: ${rt.selected_agent || "n/a"}`,
+      `Strategy: ${rt.strategy || "n/a"}`,
+      `Verification: ${ev.verification || "n/a"}`,
+      `Citations: ${citations || "none"}`
+    ].join(" | ");
+    const metaEl = document.createElement("div");
+    metaEl.className = "meta";
+    metaEl.textContent = meta;
+    body.appendChild(metaEl);
+  }
+
+  async function sendMsg() {
+    const text = input.value.trim();
+    if (!text) return;
+    const userMsg = addMessage("user", text);
+    input.value = "";
+    sendBtn.disabled = true;
+
+    if (controller) controller.abort();
+    controller = new AbortController();
+
+    const assistant = addMessage("assistant", "...");
+    const form = new FormData();
+    form.append("message", text);
+    for (const f of selectedFiles) {
+      form.append("files", f);
+    }
+    const userFiles = selectedFiles.map((f) => f.name);
+    selectedFiles = [];
+    updateFileList();
+    if (userFiles.length) {
+      const filesNote = document.createElement("div");
+      filesNote.className = "meta";
+      filesNote.textContent = `Attached: ${userFiles.join(", ")}`;
+      userMsg.body.appendChild(filesNote);
+    }
+
+    try {
+      const res = await fetch("/chat/stream", { method: "POST", body: form, signal: controller.signal });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const reader = res.body.getReader();
+      const dec = new TextDecoder();
+      let buf = "";
+      let acc = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        const parts = buf.split("\n\n");
+        buf = parts.pop() || "";
+
+        for (const p of parts) {
+          if (!p.startsWith("data: ")) continue;
+          const ev = JSON.parse(p.slice(6));
+          if (ev.type === "text_delta") {
+            acc = ev.accumulated || (acc + (ev.delta || ""));
+            assistant.content.innerHTML = escapeHtml(acc).replace(/\n/g, "<br>");
+          } else if (ev.type === "done") {
+            assistant.content.innerHTML = escapeHtml(ev.answer || acc).replace(/\n/g, "<br>");
+            renderMeta(assistant.body, ev);
+            renderSources(assistant.body, ev.sources || []);
+            await renderVisualization(assistant.body, ev.visualization || null);
+          } else if (ev.type === "error") {
+            assistant.content.innerHTML = `<span style="color:#b00020">Error: ${escapeHtml(ev.error || "unknown")}</span>`;
+          } else if (ev.type === "cancelled") {
+            assistant.content.textContent = "(cancelled)";
+          }
+        }
+      }
+    } catch (err) {
+      assistant.content.innerHTML = `<span style="color:#b00020">Error: ${escapeHtml(String(err))}</span>`;
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  async function resetChat() {
+    try { await fetch("/reset", { method: "POST" }); } catch (_) {}
+    chat.innerHTML = `
+      <div class="welcome" id="welcome">
+        <h2>New Session</h2>
+        <p>Ask startup, GTM, product, technical architecture, or fundraising questions.</p>
+        <div class="examples">
+          <button class="example" onclick="sendExample('I am a solo founder. How do I get my first 10 users?')">I am a solo founder. How do I get my first 10 users?</button>
+          <button class="example" onclick="sendExample('What should I include in a pre-seed pitch deck?')">What should I include in a pre-seed pitch deck?</button>
+          <button class="example" onclick="sendExample('How should we design our API for long-term scale?')">How should we design our API for long-term scale?</button>
+        </div>
+      </div>`;
+  }
+
+  function sendExample(q) { input.value = q; sendMsg(); }
+  window.sendExample = sendExample;
+  fileInput.onchange = (e) => {
+    const incoming = Array.from(e.target.files || []);
+    selectedFiles = selectedFiles.concat(incoming);
+    updateFileList();
+    fileInput.value = "";
+  };
+  sendBtn.onclick = sendMsg;
+  resetBtn.onclick = resetChat;
+  input.onkeydown = (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMsg(); } };
+  input.focus();
+</script>
+</body>
+</html>

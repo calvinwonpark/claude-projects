@@ -1,0 +1,15 @@
+anthropic>=0.40.0
+fastapi>=0.115.5
+uvicorn[standard]>=0.32.0
+python-dotenv>=1.0.1
+python-multipart>=0.0.9
+redis>=5.0.6
+fastapi-limiter>=0.1.6
+PyJWT>=2.9.0
+numpy>=1.24.0
+openai>=1.51.0
+google-genai>=1.18.0
+sentence-transformers>=3.2.0
+psycopg[binary]>=3.2.1
+psycopg_pool>=3.2.3
+pytest>=8.3.0

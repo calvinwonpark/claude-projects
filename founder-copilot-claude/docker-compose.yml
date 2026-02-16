@@ -1,0 +1,48 @@
+services:
+  foundercopilot:
+    build: .
+    ports:
+      - "8030:8000"
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+      - ./state:/app/state
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+  indexer:
+    build: .
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+      - ./state:/app/state
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["python", "scripts/index_corpus.py"]
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: ${PGUSER:-postgres}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-postgres}
+      POSTGRES_DB: ${PGDATABASE:-copilot}
+    ports:
+      - "5435:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER:-postgres} -d ${PGDATABASE:-copilot}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./db/migrations/001_init_documents.sql:/docker-entrypoint-initdb.d/001_init_documents.sql:ro
+      - ./db/migrations/002_init_audit_logs.sql:/docker-entrypoint-initdb.d/002_init_audit_logs.sql:ro
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6382:6379"
+
+volumes:
+  dbdata:

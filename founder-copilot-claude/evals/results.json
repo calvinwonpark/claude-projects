@@ -1,0 +1,1346 @@
+{
+  "summary": {
+    "eval_mode": "full",
+    "total_cases": 42,
+    "routing_accuracy": 0.5714,
+    "retrieval_hit_rate": 0.9048,
+    "groundedness_rate": 0.7381,
+    "citation_precision": 1.0,
+    "citation_recall": 0.62,
+    "tool_correctness_rate": 0.9286,
+    "latency_ms": {
+      "retrieval_p50": 198.85,
+      "retrieval_p95": 421.04,
+      "generation_p50": 2055.85,
+      "generation_p95": 3088.12,
+      "retrieval_avg": 234.55
+    },
+    "token_usage": {
+      "input": 31726,
+      "output": 9260,
+      "estimated_total_words": 4849
+    },
+    "pitch_outline_starts_at_one_rate": 1.0
+  },
+  "cases": [
+    {
+      "id": "r01",
+      "query": "How should we design our API for long-term scale?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/api_design.md"
+      ],
+      "citations": [
+        "doc:tech/api_design.md",
+        "doc:tech/architecture_patterns.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here are some key recommendations for designing an API for long-term scale:\n\n1. Use explicit versioning [doc:tech/api_design.md]: Versioning your API allows you to make breaking changes without disrupting existing clients.\n\n2. Ensure idempotency fo",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 655.21,
+        "generation": 3822.07
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r02",
+      "query": "What security controls should we prioritize first?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/security_best_practices.md"
+      ],
+      "citations": [
+        "doc:tech/security_best_practices.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the key security controls that should be prioritized first are:\n\n1. Use least privilege access [doc:tech/security_best_practices.md]\n2. Implement secrets management [doc:tech/security_best_practices.md] \n3. Perform dependency scanning [doc:tech/sec",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 201.42,
+        "generation": 1609.24
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r03",
+      "query": "How do I optimize cloud architecture costs?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/architecture_patterns.md"
+      ],
+      "citations": [
+        "doc:tech/architecture_patterns.md",
+        "doc:tech/security_best_practices.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here are some tips for optimizing cloud architecture costs:\n\n1. Use modular architecture with clear service boundaries [doc:tech/architecture_patterns.md]. This allows you to scale and optimize individual components rather than the entire system.\n\n",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 319.71,
+        "generation": 2055.85
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r04",
+      "query": "What is a good go-to-market strategy for SMB SaaS?",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md"
+      ],
+      "citations": [
+        "doc:marketing/customer_acquisition.md",
+        "doc:investor/fundraising_strategy.md",
+        "doc:founder_scenario_b2b.md",
+        "doc:investor/kpi_definitions.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here is a suggested go-to-market strategy for SMB SaaS:\n\n1. Start with a narrow Ideal Customer Profile (ICP) and focus on one marketing channel where customers already have intent [doc:marketing/customer_acquisition.md]. This allows you to efficien",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 123.45,
+        "generation": 3088.12
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r05",
+      "query": "Help me improve landing page copy and CTA.",
+      "selected_agent": "marketing",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/copywriting_tips.md"
+      ],
+      "citations": [
+        "doc:marketing/copywriting_tips.md",
+        "doc:marketing/customer_acquisition.md",
+        "doc:investor/pitch_deck_structure.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here are some tips to improve your landing page copy and call-to-action (CTA):\n\n1. Use outcome-first messaging: [doc:marketing/copywriting_tips.md] Clearly communicate the problem you solve, the promise of your product, and the proof that it works.",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 195.25,
+        "generation": 2999.46
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r06",
+      "query": "Which acquisition channel should I test first?",
+      "selected_agent": "marketing",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/customer_acquisition.md"
+      ],
+      "citations": [
+        "doc:marketing/customer_acquisition.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the recommendation is to start with a narrow Ideal Customer Profile (ICP) and test one channel where customers already have intent [doc:marketing/customer_acquisition.md]. The context suggests prioritizing retention loops over vanity traffic spikes",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 190.13,
+        "generation": 1254.77
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r07",
+      "query": "How should I structure my pre-seed pitch deck?",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "investor/pitch_deck_structure.md"
+      ],
+      "citations": [
+        "doc:investor/pitch_deck_structure.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the recommended structure for a pre-seed pitch deck is:\n\n1. Problem - Clearly define the problem you are solving [doc:investor/pitch_deck_structure.md].\n2. Solution - Explain how your product or service addresses the problem [doc:investor/pitch_dec",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 178.85,
+        "generation": 2412.39
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r08",
+      "query": "What KPIs should we report to investors monthly?",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "investor/kpi_definitions.md"
+      ],
+      "citations": [
+        "doc:investor/kpi_definitions.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the key SaaS KPIs that should be reported to investors monthly are:\n\n- MRR (Monthly Recurring Revenue) [doc:investor/kpi_definitions.md]\n- ARR (Annual Recurring Revenue) [doc:investor/kpi_definitions.md] \n- CAC (Customer Acquisition Cost) [doc:inve",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 150.2,
+        "generation": 1914.81
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r09",
+      "query": "When should we start fundraising?",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "investor/fundraising_strategy.md"
+      ],
+      "citations": [
+        "doc:investor/fundraising_strategy.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "According to the retrieved context, the key points on when to start fundraising are:\n\n[doc:investor/fundraising_strategy.md] Define milestone-based fundraising: what traction unlocks the next round. Raise when you have a clear narrative on problem, traction, and execution velocit",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 1252.96,
+        "generation": 2807.17
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r10",
+      "query": "How do we find first design partners in B2B?",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "founder_scenario_b2b.md"
+      ],
+      "citations": [
+        "doc:founder_scenario_b2b.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "According to the retrieved context, the key steps to find first design partners in a B2B startup are:\n\n1) Interview 20 target users [doc:founder_scenario_b2b.md]\n2) Build a narrow MVP for one painful workflow [doc:founder_scenario_b2b.md] \n3) Close first 3 design partners quickly",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 148.78,
+        "generation": 3326.07
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r11",
+      "query": "시장 규모(TAM)를 대략 추정해줘",
+      "selected_agent": "tech",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "investor/kpi_definitions.md",
+        "marketing/customer_acquisition.md"
+      ],
+      "expected_doc_ids": [
+        "investor/fundraising_strategy.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "market_size_lookup",
+      "planned_tool": "market_size_lookup",
+      "retrieval_hit": false,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Kpi Definitions' (investor/kpi_definitions.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 168.88,
+        "generation": 1333.36
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r12",
+      "query": "경쟁사 비교 요약해줘",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [],
+      "expected_doc_ids": [
+        "marketing/growth_tactics.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "competitor_summary",
+      "planned_tool": "",
+      "retrieval_hit": false,
+      "answer_preview": "I do not have enough evidence in retrieved sources to answer reliably. Could you clarify your request or provide a relevant document?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 207.07,
+        "generation": 1127.94
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r13",
+      "query": "CAC와 회수기간 계산해줘",
+      "selected_agent": "tech",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "investor/kpi_definitions.md",
+        "marketing/customer_acquisition.md"
+      ],
+      "expected_doc_ids": [
+        "investor/kpi_definitions.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "unit_economics_calculator",
+      "planned_tool": "unit_economics_calculator",
+      "retrieval_hit": true,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Kpi Definitions' (investor/kpi_definitions.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 186.37,
+        "generation": 1708.77
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r14",
+      "query": "How to compute CAC payback period?",
+      "selected_agent": "tech",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md"
+      ],
+      "expected_doc_ids": [
+        "investor/kpi_definitions.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "unit_economics_calculator",
+      "planned_tool": "unit_economics_calculator",
+      "retrieval_hit": true,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Customer Acquisition' (marketing/customer_acquisition.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 130.66,
+        "generation": 1879.68
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r15",
+      "query": "Summarize alternatives to our competitor.",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/customer_acquisition.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "competitor_summary",
+      "planned_tool": "competitor_summary",
+      "retrieval_hit": true,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Customer Acquisition' (marketing/customer_acquisition.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 202.61,
+        "generation": 3011.17
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r16",
+      "query": "Estimate serviceable market quickly.",
+      "selected_agent": "tech",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "investor/fundraising_strategy.md"
+      ],
+      "citations": [
+        "doc:founder_scenario_b2b.md",
+        "doc:marketing/customer_acquisition.md",
+        "doc:tech/architecture_patterns.md",
+        "doc:investor/pitch_deck_structure.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "market_size_lookup",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the information provided is insufficient to estimate the serviceable market quickly. The context does not contain any information about the specific product, industry, or target market. To estimate the serviceable market, I would need more details ",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 198.85,
+        "generation": 1746.99
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r17",
+      "query": "How can we improve retention loops?",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/growth_tactics.md"
+      ],
+      "citations": [
+        "doc:marketing/customer_acquisition.md",
+        "doc:founder_scenario_b2b.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": false,
+      "answer_preview": "Based on the retrieved context, here are some ways to improve retention loops:\n\n[doc:marketing/customer_acquisition.md] The context suggests to \"Prioritize retention loops over vanity traffic spikes.\" This implies that focusing on improving retention loops is important for custom",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 122.2,
+        "generation": 1772.1
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r18",
+      "query": "How should we think about burn and runway?",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/customer_acquisition.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "investor/kpi_definitions.md"
+      ],
+      "citations": [
+        "doc:investor/fundraising_strategy.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the key points about burn and runway are:\n\n[doc:investor/fundraising_strategy.md] Define milestone-based fundraising: what traction unlocks the next round. Raise when you have a clear narrative on problem, traction, and execution velocity.\n\nThis su",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 181.69,
+        "generation": 1909.22
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r19",
+      "query": "What should be in an architecture review checklist?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "citations": [
+        "doc:tech/architecture_patterns.md",
+        "doc:tech/security_best_practices.md",
+        "doc:tech/api_design.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, an architecture review checklist should include the following:\n\n1. Modular architecture with clear service boundaries [doc:tech/architecture_patterns.md]\n2. Prioritize observability, retries, and graceful degradation [doc:tech/architecture_patterns",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 167.13,
+        "generation": 2085.79
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r20",
+      "query": "How to add request IDs and traceability?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/api_design.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/api_design.md"
+      ],
+      "citations": [
+        "doc:tech/api_design.md",
+        "doc:tech/security_best_practices.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the key points for adding request IDs and traceability are:\n\n1. [doc:tech/api_design.md] Use request IDs for tracing: \"Use request IDs for tracing and enforce input validation at boundaries.\"\n\n2. [doc:tech/security_best_practices.md] Log security e",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 196.28,
+        "generation": 2220.11
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r21",
+      "query": "보안 베스트 프랙티스 알려줘",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/security_best_practices.md"
+      ],
+      "citations": [
+        "doc:tech/security_best_practices.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "보안 베스트 프랙티스에 대한 정보는 다음과 같습니다:\n\n- 최소 권한 액세스 사용 [doc:tech/security_best_practices.md]\n- 비밀 정보 관리 [doc:tech/security_best_practices.md] \n- 의존성 스캐닝 수행 [doc:tech/security_best_practices.md]\n- 보안 이벤트 로깅 시 개인 식별 정보 마스킹 [doc:tech/security_best_practices.md]\n- 프로덕션 환경에서 인증 및 권한 부여 적용 [doc",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 165.75,
+        "generation": 2172.6
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r22",
+      "query": "초기 GTM 실험은 어떻게 설계해야 하나요?",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/growth_tactics.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/growth_tactics.md"
+      ],
+      "citations": [
+        "doc:marketing/growth_tactics.md",
+        "doc:founder_scenario_b2b.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here are some recommendations for designing early GTM (go-to-market) experiments:\n\n1. Run weekly growth experiments with one hypothesis per test [doc:marketing/growth_tactics.md]. This allows you to quickly iterate and learn what works best.\n\n2. Do",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 212.12,
+        "generation": 2244.14
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r23",
+      "query": "투자자에게 보여줄 KPI 우선순위는?",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "marketing/customer_acquisition.md"
+      ],
+      "expected_doc_ids": [
+        "investor/kpi_definitions.md"
+      ],
+      "citations": [
+        "doc:investor/kpi_definitions.md",
+        "doc:investor/fundraising_strategy.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the key SaaS KPIs that should be prioritized for investors are:\n\n1. MRR (Monthly Recurring Revenue) [doc:investor/kpi_definitions.md]\n2. ARR (Annual Recurring Revenue) [doc:investor/kpi_definitions.md] \n3. CAC (Customer Acquisition Cost) [doc:inves",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 222.84,
+        "generation": 2194.83
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r24",
+      "query": "What should our API error schema look like?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "investor/kpi_definitions.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/api_design.md"
+      ],
+      "citations": [
+        "doc:tech/api_design.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the API error schema should have the following characteristics:\n\n1. [doc:tech/api_design.md] Use consistent error envelopes for API responses. This means having a standardized format for error responses that includes relevant information like error",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 421.04,
+        "generation": 1542.61
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r25",
+      "query": "How do I improve campaign messaging for conversion?",
+      "selected_agent": "marketing",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/copywriting_tips.md"
+      ],
+      "citations": [
+        "doc:marketing/copywriting_tips.md",
+        "doc:marketing/customer_acquisition.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here are some tips to improve campaign messaging for conversion:\n\n1. Use outcome-first messaging that focuses on the problem, promise, proof, and call-to-action [doc:marketing/copywriting_tips.md].\n2. Match the tone of the messaging to the buyer's ",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 168.74,
+        "generation": 2131.56
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r26",
+      "query": "What narrative should I use for Series A investors?",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "investor/fundraising_strategy.md",
+        "investor/pitch_deck_structure.md"
+      ],
+      "citations": [
+        "doc:investor/fundraising_strategy.md",
+        "doc:founder_scenario_b2b.md",
+        "doc:investor/pitch_deck_structure.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here is the recommended narrative to use for Series A investors:\n\n1. Define milestone-based fundraising: what traction unlocks the next round. Raise when you have a clear narrative on the problem, traction, and execution velocity. [doc:investor/fun",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 341.74,
+        "generation": 2145.81
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r27",
+      "query": "Should we use microservices now?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/architecture_patterns.md"
+      ],
+      "citations": [
+        "doc:tech/architecture_patterns.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "The retrieved context does not provide a definitive answer on whether you should use microservices now. The context discusses some general architectural patterns and best practices, but does not specifically recommend microservices.\n\nThe context suggests using a \"modular architec",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 226.29,
+        "generation": 2337.29
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r28",
+      "query": "How can we lower CAC while keeping growth?",
+      "selected_agent": "marketing",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "investor/kpi_definitions.md",
+        "marketing/customer_acquisition.md"
+      ],
+      "citations": [
+        "doc:marketing/customer_acquisition.md",
+        "doc:marketing/growth_tactics.md",
+        "doc:investor/kpi_definitions.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "unit_economics_calculator",
+      "planned_tool": "unit_economics_calculator",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here are some suggestions for lowering customer acquisition cost (CAC) while maintaining growth:\n\n1. [doc:marketing/customer_acquisition.md] Start with a narrow Ideal Customer Profile (ICP) and focus on one marketing channel where customers already",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 211.38,
+        "generation": 2656.92
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r29",
+      "query": "우리 스타트업의 TAM을 추정해줘",
+      "selected_agent": "tech",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [],
+      "expected_doc_ids": [
+        "investor/fundraising_strategy.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "market_size_lookup",
+      "planned_tool": "market_size_lookup",
+      "retrieval_hit": false,
+      "answer_preview": "I do not have enough evidence in retrieved sources to answer reliably. Could you clarify your request or provide a relevant document?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 145.52,
+        "generation": 2436.32
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r30",
+      "query": "What does a good investor ask slide include?",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "investor/pitch_deck_structure.md"
+      ],
+      "citations": [
+        "doc:investor/pitch_deck_structure.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, a good investor ask slide should include the following key elements:\n\n[doc:investor/pitch_deck_structure.md] The recommended order for a pitch deck includes having an \"ask\" slide at the end, where you define the specific funding amount and what it ",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 115.33,
+        "generation": 1787.76
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r31",
+      "query": "How can we improve onboarding conversion?",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/copywriting_tips.md",
+        "marketing/growth_tactics.md"
+      ],
+      "citations": [
+        "doc:founder_scenario_b2b.md",
+        "doc:marketing/customer_acquisition.md",
+        "doc:marketing/copywriting_tips.md",
+        "doc:investor/kpi_definitions.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here are some suggestions to improve onboarding conversion:\n\n1. [doc:founder_scenario_b2b.md] Build a narrow MVP for one painful workflow. Focus on solving a specific user problem rather than trying to do too much at once.\n\n2. [doc:marketing/custom",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 141.66,
+        "generation": 1972.64
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r32",
+      "query": "What should go in our incident response process?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/security_best_practices.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Security Best Practices' (tech/security_best_practices.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 118.02,
+        "generation": 1472.68
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r33",
+      "query": "How do I frame traction for angels?",
+      "selected_agent": "tech",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "investor/fundraising_strategy.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "investor/fundraising_strategy.md"
+      ],
+      "citations": [
+        "doc:investor/pitch_deck_structure.md",
+        "doc:investor/fundraising_strategy.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here are some key points on how to frame traction for angel investors:\n\n[doc:investor/pitch_deck_structure.md] The pitch deck structure recommends including a \"traction\" section to showcase your progress and momentum. This should be one of the key ",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 231.06,
+        "generation": 1998.41
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r34",
+      "query": "기술 로드맵을 투자자 관점으로 정리해줘",
+      "selected_agent": "tech",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "investor/pitch_deck_structure.md"
+      ],
+      "expected_doc_ids": [
+        "investor/pitch_deck_structure.md",
+        "tech/architecture_patterns.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Pitch Deck Structure' (investor/pitch_deck_structure.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 216.6,
+        "generation": 2656.2
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r35",
+      "query": "API versioning strategy recommendation",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/api_design.md"
+      ],
+      "citations": [
+        "doc:tech/api_design.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, here is a recommendation for an API versioning strategy:\n\n[doc:tech/api_design.md] The context suggests that APIs should be designed with explicit versioning. This allows for changes and improvements to be made to the API without breaking existing ",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 231.17,
+        "generation": 1290.39
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r36",
+      "query": "채널 믹스 실험 우선순위 알려줘",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "investor/kpi_definitions.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/customer_acquisition.md"
+      ],
+      "citations": [
+        "doc:marketing/growth_tactics.md",
+        "doc:marketing/customer_acquisition.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the following recommendations can be made for channel mix experiments and their prioritization:\n\n1. [doc:marketing/growth_tactics.md] Run weekly growth experiments with one hypothesis per test. Document the experiment setup, success criteria, and d",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 207.25,
+        "generation": 2722.98
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r37",
+      "query": "How do we estimate gross margin impact of discounts?",
+      "selected_agent": "tech",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md"
+      ],
+      "expected_doc_ids": [
+        "investor/kpi_definitions.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "unit_economics_calculator",
+      "planned_tool": "unit_economics_calculator",
+      "retrieval_hit": true,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Customer Acquisition' (marketing/customer_acquisition.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 226.3,
+        "generation": 1999.83
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r38",
+      "query": "Suggest competitor landscape snapshot",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/growth_tactics.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "competitor_summary",
+      "planned_tool": "competitor_summary",
+      "retrieval_hit": true,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Founder Scenario B2B' (founder_scenario_b2b.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 231.08,
+        "generation": 1266.82
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r39",
+      "query": "What is a pragmatic monolith to microservice path?",
+      "selected_agent": "tech",
+      "expected_agent": "tech",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "tech/architecture_patterns.md"
+      ],
+      "citations": [],
+      "verification": "insufficient_evidence",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "I do not have enough evidence in the retrieved sources to answer reliably. Could you confirm if you want details from 'Architecture Patterns' (tech/architecture_patterns.md)?",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 141.32,
+        "generation": 1225.27
+      },
+      "first_slide_number": null
+    },
+    {
+      "id": "r40",
+      "query": "투자자 미팅 전 KPI 체크리스트",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "investor/kpi_definitions.md",
+        "marketing/customer_acquisition.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "investor/kpi_definitions.md"
+      ],
+      "citations": [
+        "doc:investor/kpi_definitions.md",
+        "doc:tech/security_best_practices.md",
+        "doc:marketing/customer_acquisition.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the key points for an investor meeting KPI checklist are:\n\n1. Core SaaS KPIs to track: [doc:investor/kpi_definitions.md] MRR, ARR, CAC, LTV, gross margin, net revenue retention, burn multiple.\n2. Use consistent cohort definitions and reconcile KPI ",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 300.72,
+        "generation": 1942.66
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r41",
+      "query": "How should we message enterprise security posture?",
+      "selected_agent": "tech",
+      "expected_agent": "marketing",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "tech/api_design.md",
+        "tech/architecture_patterns.md",
+        "tech/security_best_practices.md"
+      ],
+      "expected_doc_ids": [
+        "marketing/copywriting_tips.md",
+        "tech/security_best_practices.md"
+      ],
+      "citations": [
+        "doc:tech/security_best_practices.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the key points for messaging enterprise security posture are:\n\n1. Use least privilege access, secrets management, and dependency scanning [doc:tech/security_best_practices.md].\n2. Log security events with PII redaction and enforce authentication an",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 220.77,
+        "generation": 1480.49
+      },
+      "first_slide_number": 1
+    },
+    {
+      "id": "r42",
+      "query": "What should be our pricing narrative for seed deck?",
+      "selected_agent": "investor",
+      "expected_agent": "investor",
+      "retrieved_doc_ids": [
+        "founder_scenario_b2b.md",
+        "investor/fundraising_strategy.md",
+        "investor/kpi_definitions.md",
+        "investor/pitch_deck_structure.md",
+        "marketing/copywriting_tips.md",
+        "marketing/customer_acquisition.md",
+        "marketing/growth_tactics.md",
+        "tech/architecture_patterns.md"
+      ],
+      "expected_doc_ids": [
+        "investor/fundraising_strategy.md",
+        "investor/pitch_deck_structure.md"
+      ],
+      "citations": [
+        "doc:investor/fundraising_strategy.md",
+        "doc:marketing/copywriting_tips.md",
+        "doc:marketing/customer_acquisition.md",
+        "doc:investor/kpi_definitions.md"
+      ],
+      "verification": "verified",
+      "expected_tool": "",
+      "planned_tool": "unit_economics_calculator",
+      "retrieval_hit": true,
+      "answer_preview": "Based on the retrieved context, the key points for a pricing narrative in a seed deck are:\n\n1. Define milestone-based fundraising: what traction unlocks the next round [doc:investor/fundraising_strategy.md]. This suggests that the pricing narrative should be tied to the startup's",
+      "model": "claude-3-haiku-20240307",
+      "latency_ms": {
+        "retrieval": 176.52,
+        "generation": 2522.13
+      },
+      "first_slide_number": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Metrics</title></head>
+<body style="font-family: Arial, sans-serif; padding: 20px;">
+  <h2>Founder Copilot Metrics</h2>
+  <pre id="out">Loading...</pre>
+<script>
+  fetch('/api/metrics')
+    .then(r => r.json())
+    .then(d => document.getElementById('out').textContent = JSON.stringify(d, null, 2))
+    .catch(e => document.getElementById('out').textContent = String(e));
+</script>
+</body>
+</html>

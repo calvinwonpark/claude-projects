@@ -1,0 +1,20 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Runtime state
+state/
+*.db
+
+# Mac
+.DS_Store
+__MACOSX/
+
+# Logs
+*.log
