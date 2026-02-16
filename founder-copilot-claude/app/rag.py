@@ -7,7 +7,8 @@ from typing import Any
 from app import db
 from app.config import settings
 from app.metrics import metrics
-from app.providers.embeddings import EmbeddingsProvider
+from app.providers.embeddings import EmbeddingsProvider, embedding_provider_identity
+from app.utils.cache import LruTtlCache
 
 
 @dataclass
@@ -23,8 +24,16 @@ class RetrievedDoc:
 class Retriever:
     def __init__(self, embeddings: EmbeddingsProvider) -> None:
         self.embeddings = embeddings
-        self._retrieval_cache: dict[str, tuple[float, list[RetrievedDoc]]] = {}
-        self._query_embedding_cache: dict[str, tuple[float, list[float]]] = {}
+        self._provider_id = embedding_provider_identity(embeddings)
+        self._store_id = settings.vector_store_id
+        self._retrieval_cache = LruTtlCache[list[RetrievedDoc]](
+            max_size=settings.retrieval.retrieval_cache_max_size,
+            ttl_seconds=settings.retrieval.retrieval_cache_ttl_seconds,
+        )
+        self._query_embedding_cache = LruTtlCache[list[float]](
+            max_size=settings.retrieval.query_embedding_cache_max_size,
+            ttl_seconds=settings.retrieval.query_embedding_cache_ttl_seconds,
+        )
 
     @staticmethod
     def _now() -> float:
@@ -35,20 +44,25 @@ class Retriever:
         return " ".join((text or "").lower().split())
 
     def _embed_query_cached(self, text: str) -> list[float]:
-        key = self._norm(text)
-        ttl = 86400
-        max_size = 3000
+        key = f"{self._norm(text)}|provider={self._provider_id}"
         hit = self._query_embedding_cache.get(key)
-        if hit and hit[0] > self._now():
+        if hit is not None:
+            metrics.query_embedding_cache_hits += 1
             metrics.embedding_cache_hits += 1
-            return hit[1]
+            self._sync_cache_stats_to_metrics()
+            return hit
+        metrics.query_embedding_cache_misses += 1
         metrics.embedding_cache_misses += 1
         vec = self.embeddings.embed_text(text)
-        self._query_embedding_cache[key] = (self._now() + ttl, vec)
-        if len(self._query_embedding_cache) > max_size:
-            oldest = next(iter(self._query_embedding_cache))
-            self._query_embedding_cache.pop(oldest, None)
+        self._query_embedding_cache.set(key, vec)
+        self._sync_cache_stats_to_metrics()
         return vec
+
+    def _sync_cache_stats_to_metrics(self) -> None:
+        metrics.retrieval_cache_evictions = self._retrieval_cache.stats.evictions
+        metrics.retrieval_cache_expirations = self._retrieval_cache.stats.expirations
+        metrics.query_embedding_cache_evictions = self._query_embedding_cache.stats.evictions
+        metrics.query_embedding_cache_expirations = self._query_embedding_cache.stats.expirations
 
     @staticmethod
     def _cosine(a: list[float], b: list[float]) -> float:
@@ -64,13 +78,15 @@ class Retriever:
 
     def retrieve(self, query: str, top_k: int = 6) -> tuple[list[RetrievedDoc], float]:
         started = self._now()
-        key = f"{self._norm(query)}|k={top_k}|min={settings.retrieval.min_score}"
-        ttl = 600
-        max_size = 5000
+        key = (
+            f"{self._norm(query)}|k={top_k}|min={settings.retrieval.min_score}|"
+            f"store={self._store_id}|provider={self._provider_id}"
+        )
         hit = self._retrieval_cache.get(key)
-        if hit and hit[0] > self._now():
+        if hit is not None:
             metrics.retrieval_cache_hits += 1
-            return hit[1], round((self._now() - started) * 1000, 2)
+            self._sync_cache_stats_to_metrics()
+            return hit, round((self._now() - started) * 1000, 2)
         metrics.retrieval_cache_misses += 1
         qv = self._embed_query_cached(query)
         min_score = settings.retrieval.min_score
@@ -113,10 +129,8 @@ class Retriever:
                 for r in fallback_rows
             ]
         out = _rerank(query, out)[:top_k]
-        self._retrieval_cache[key] = (self._now() + ttl, out)
-        if len(self._retrieval_cache) > max_size:
-            oldest = next(iter(self._retrieval_cache))
-            self._retrieval_cache.pop(oldest, None)
+        self._retrieval_cache.set(key, out)
+        self._sync_cache_stats_to_metrics()
         return out, round((self._now() - started) * 1000, 2)
 
 

@@ -19,8 +19,14 @@ class MetricsTracker:
         self.request_count = 0
         self.embedding_cache_hits = 0
         self.embedding_cache_misses = 0
+        self.query_embedding_cache_hits = 0
+        self.query_embedding_cache_misses = 0
+        self.query_embedding_cache_evictions = 0
+        self.query_embedding_cache_expirations = 0
         self.retrieval_cache_hits = 0
         self.retrieval_cache_misses = 0
+        self.retrieval_cache_evictions = 0
+        self.retrieval_cache_expirations = 0
 
     def record(
         self,
@@ -76,7 +82,20 @@ class MetricsTracker:
             },
             "cache_hit_rates": {
                 "embedding": self._cache_rate(self.embedding_cache_hits, self.embedding_cache_misses),
+                "query_embedding": self._cache_rate(self.query_embedding_cache_hits, self.query_embedding_cache_misses),
                 "retrieval": self._cache_rate(self.retrieval_cache_hits, self.retrieval_cache_misses),
+            },
+            "cache_counters": {
+                "embedding_cache_hits": self.embedding_cache_hits,
+                "embedding_cache_misses": self.embedding_cache_misses,
+                "query_embedding_cache_hits": self.query_embedding_cache_hits,
+                "query_embedding_cache_misses": self.query_embedding_cache_misses,
+                "query_embedding_cache_evictions": self.query_embedding_cache_evictions,
+                "query_embedding_cache_expirations": self.query_embedding_cache_expirations,
+                "retrieval_cache_hits": self.retrieval_cache_hits,
+                "retrieval_cache_misses": self.retrieval_cache_misses,
+                "retrieval_cache_evictions": self.retrieval_cache_evictions,
+                "retrieval_cache_expirations": self.retrieval_cache_expirations,
             },
             "errors": sum(1 for e in self.events if e.error),
         }

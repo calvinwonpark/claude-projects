@@ -51,6 +51,10 @@ class RetrievalConfig:
     max_context_chars: int
     rerank_mode: str
     lexical_fallback: bool
+    retrieval_cache_ttl_seconds: int
+    retrieval_cache_max_size: int
+    query_embedding_cache_ttl_seconds: int
+    query_embedding_cache_max_size: int
 
 
 @dataclass(frozen=True)
@@ -90,6 +94,16 @@ class AppConfig:
     tools: ToolConfig
     logging: LoggingConfig
     embedding_provider: str
+    vector_backend: str
+    vector_dim: int
+    openai_embedding_model: str
+    gemini_embedding_model: str
+    local_embedding_model: str
+    openai_api_key: str
+    gemini_api_key: str
+    embedding_cache_ttl_seconds: int
+    embedding_cache_max_size: int
+    vector_store_id: str
     auth_mode: str
     redis_url: str
 
@@ -112,6 +126,10 @@ class AppConfig:
                 max_context_chars=_as_int("RAG_MAX_CONTEXT_CHARS", 7000),
                 rerank_mode=os.getenv("RERANK_MODE", "heuristic").lower(),
                 lexical_fallback=_as_bool("RETRIEVAL_ENABLE_LEXICAL_FALLBACK", True),
+                retrieval_cache_ttl_seconds=_as_int("RETRIEVAL_CACHE_TTL_SECONDS", 600),
+                retrieval_cache_max_size=_as_int("RETRIEVAL_CACHE_MAX_SIZE", 5000),
+                query_embedding_cache_ttl_seconds=_as_int("QUERY_EMBEDDING_CACHE_TTL_SECONDS", 86400),
+                query_embedding_cache_max_size=_as_int("QUERY_EMBEDDING_CACHE_MAX_SIZE", 3000),
             ),
             router=RouterConfig(
                 strategy=os.getenv("ROUTER_STRATEGY", "auto").lower(),
@@ -134,6 +152,20 @@ class AppConfig:
                 enable_audit_logs=_as_bool("ENABLE_AUDIT_LOGS", True),
             ),
             embedding_provider=os.getenv("EMBEDDING_PROVIDER", "local"),
+            vector_backend=os.getenv("VECTOR_BACKEND", "pgvector").lower(),
+            vector_dim=_as_int("VECTOR_DIM", 1536),
+            openai_embedding_model=os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"),
+            gemini_embedding_model=os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001"),
+            local_embedding_model=os.getenv("LOCAL_EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"),
+            openai_api_key=os.getenv("OPENAI_API_KEY", "").strip(),
+            gemini_api_key=os.getenv("GEMINI_API_KEY", "").strip(),
+            embedding_cache_ttl_seconds=_as_int("EMBEDDING_CACHE_TTL_SECONDS", 86400),
+            embedding_cache_max_size=_as_int("EMBEDDING_CACHE_MAX_SIZE", 5000),
+            vector_store_id=(
+                f"{os.getenv('VECTOR_BACKEND', 'pgvector').lower()}:"
+                f"{os.getenv('PGHOST', 'db')}:{os.getenv('PGPORT', '5432')}:"
+                f"{os.getenv('PGDATABASE', 'copilot')}"
+            ),
             auth_mode=os.getenv("AUTH_MODE", "none"),
             redis_url=os.getenv("REDIS_URL", "redis://redis:6379/0"),
         )

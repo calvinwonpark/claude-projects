@@ -93,12 +93,14 @@ async def main():
     for case in cases:
         q = case["query"]
         expected_agent = case["expected_agent"]
+        acceptable_agents = set(case.get("acceptable_agents", []))
+        acceptable_agents.add(expected_agent)
         expected_docs = set(case.get("expected_doc_ids", []))
         expected_tool = case.get("expected_tool", "")
 
         trace = route_query(q)
         selected = trace["selected_agent"]
-        routing_ok += int(selected == expected_agent)
+        routing_ok += int(selected in acceptable_agents)
 
         docs, r_ms = retriever.retrieve(q, top_k=int(os.getenv("RETRIEVAL_TOP_K", "8")))
         retrieval_lat.append(r_ms)
@@ -164,6 +166,7 @@ async def main():
                 "query": q,
                 "selected_agent": selected,
                 "expected_agent": expected_agent,
+                "acceptable_agents": sorted(acceptable_agents),
                 "retrieved_doc_ids": sorted(retrieved_ids),
                 "expected_doc_ids": sorted(expected_docs),
                 "citations": citations,

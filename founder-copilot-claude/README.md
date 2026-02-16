@@ -65,6 +65,12 @@ Configuration is centralized in `app/config.py` and loaded once from environment
   - `TOOL_MAX_ITERS=3`
   - `TOOL_TIMEOUT_MS=3000`
   - tool calls and tool results are fed back to Claude using Anthropic tool_result message format
+  - `market_size_lookup` and `competitor_summary` are `DEMO_ONLY` tools. Their output includes `demo_stub=true` and responses are marked `verification=demo_mode`.
+- **Cache controls (single source of truth in `app/config.py`)**
+  - `EMBEDDING_CACHE_TTL_SECONDS`, `EMBEDDING_CACHE_MAX_SIZE`
+  - `QUERY_EMBEDDING_CACHE_TTL_SECONDS`, `QUERY_EMBEDDING_CACHE_MAX_SIZE`
+  - `RETRIEVAL_CACHE_TTL_SECONDS`, `RETRIEVAL_CACHE_MAX_SIZE`
+  - retrieval and query-embedding caches are true `LRU + TTL`.
 - **Safety defaults**
   - `CITATION_MODE=strict`
   - `STRICT_STREAM_BUFFERED=true` (prevents draft-then-refusal UX in strict mode)
@@ -121,7 +127,7 @@ Outputs:
 ## Cost Controls
 
 - `EVAL_MODE=retrieval_only` for cheap regression checks
-- embedding caches (TTL + LRU-like bounded maps)
+- embedding/retrieval caches (TTL + true LRU bounded maps)
 - query/retrieval cache hit rates surfaced in `/api/metrics`
 - dedupe indexing by `content_hash` avoids re-embedding unchanged chunks
 
@@ -138,6 +144,86 @@ Outputs:
 - **DB/vector:** `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `VECTOR_BACKEND`, `VECTOR_DIM`
 - **Embeddings:** `EMBEDDING_PROVIDER=openai|gemini|local|hash`, provider-specific API keys/model names
 - **Retrieval:** `RETRIEVAL_TOP_K`, `RETRIEVAL_MIN_SCORE`, `RETRIEVAL_ENABLE_LEXICAL_FALLBACK`, `RERANK_MODE`
+- **Caches:** `EMBEDDING_CACHE_TTL_SECONDS`, `EMBEDDING_CACHE_MAX_SIZE`, `QUERY_EMBEDDING_CACHE_TTL_SECONDS`, `QUERY_EMBEDDING_CACHE_MAX_SIZE`, `RETRIEVAL_CACHE_TTL_SECONDS`, `RETRIEVAL_CACHE_MAX_SIZE`
 - **Router:** `ROUTER_STRATEGY`, `ROUTER_AUTO_HIGH_CONF`, `ROUTER_AUTO_GAP`, `ROUTER_AUTO_MID_CONF`
 - **Tool runtime:** `TOOL_MAX_ITERS`, `TOOL_TIMEOUT_MS`
 - **Safety/security:** `CITATION_MODE`, `STRICT_STREAM_BUFFERED`, `AUTH_MODE`, `JWT_SECRET`, `ADMIN_API_KEY`, `PII_REDACTION`
+
+## Live Demo Script (6 Queries)
+
+Use this sequence for a reviewer-facing walkthrough.
+
+Prep:
+
+```bash
+docker compose up -d --build
+make index
+```
+
+### 1) Winner-Take-All Routing (clear technical intent)
+
+Prompt:
+- `What security controls should we implement before SOC 2?`
+
+What to show:
+- `routing_trace.strategy_selected = winner_take_all`
+- `selected_agent = tech`
+- strict citations present in answer
+
+### 2) Consult-Then-Decide Routing (mixed intent)
+
+Prompt:
+- `For fundraising, should we prioritize API reliability or GTM messaging first?`
+
+What to show:
+- `routing_trace.strategy_selected = consult_then_decide`
+- cross-functional recommendation with citations
+
+### 3) Ensemble Routing (ambiguous planning query)
+
+Prompt:
+- `Give me a plan for next quarter priorities.`
+
+What to show:
+- `routing_trace.strategy_selected = ensemble_vote`
+- balanced multi-domain response
+
+### 4) Tool Gating (no eager tools for generic investor question)
+
+Prompt:
+- `How do I create a pitch deck for my tech product?`
+
+What to show:
+- `routing_trace.tool_calls_made = []`
+- `tool_results = []`
+- answer starts at `1.` and includes investor-grounded citations
+- `verification = not_applicable`
+
+### 5) Demo Stub Hygiene (explicit demo mode)
+
+Prompt:
+- `Estimate TAM for an AI helpdesk startup in Korea.`
+
+What to show:
+- `routing_trace.tool_calls_made` includes `market_size_lookup`
+- tool output includes `demo_stub: true`
+- `verification = demo_mode`
+- final answer includes short demo placeholder disclaimer
+
+### 6) Strict Citation Safety
+
+Prompt:
+- `Answer this from retrieved docs only, and cite every factual paragraph: How should I frame traction for angels?`
+
+What to show:
+- grounded citations only (`[doc:<id>]`)
+- no fabricated citation IDs
+- strict-mode behavior remains intact
+
+Quick curl template:
+
+```bash
+curl -s -X POST http://localhost:8030/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message":"<YOUR_PROMPT>"}' | jq
+```

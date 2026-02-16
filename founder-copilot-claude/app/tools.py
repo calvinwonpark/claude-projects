@@ -14,12 +14,12 @@ class ToolSpec:
 TOOL_REGISTRY: dict[str, ToolSpec] = {
     "market_size_lookup": ToolSpec(
         name="market_size_lookup",
-        description="Lookup market size estimate (stubbed portfolio tool).",
+        description="DEMO_ONLY: market sizing placeholder (replace with real data provider in production).",
         input_schema={"type": "object", "properties": {"market": {"type": "string"}}, "required": ["market"]},
     ),
     "competitor_summary": ToolSpec(
         name="competitor_summary",
-        description="Return deterministic competitor summary (stubbed).",
+        description="DEMO_ONLY: competitor analysis placeholder (replace with real market intelligence source).",
         input_schema={"type": "object", "properties": {"company": {"type": "string"}}, "required": ["company"]},
     ),
     "unit_economics_calculator": ToolSpec(
@@ -80,7 +80,7 @@ def should_invoke_tool(query: str, tool_name: str) -> bool:
     if tool_name == "unit_economics_calculator":
         return _has_unit_econ_intent(q)
     if tool_name == "competitor_summary":
-        return any(k in q for k in ["competitor", "competitive", "alternatives"])
+        return any(k in q for k in ["competitor", "competitive", "alternatives", "competitor analysis"])
     return False
 
 
@@ -110,7 +110,12 @@ def execute_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
         market = str(args.get("market", "")).strip()
         if not market:
             raise ValueError("market is required")
-        return {"market": market, "estimate_usd_b": 12.5, "note": "Stubbed estimate for demo."}
+        return {
+            "market": market,
+            "estimate_usd_b": 12.5,
+            "demo_stub": True,
+            "note": "Demo placeholder estimate. Replace with production market data sources.",
+        }
 
     if name == "competitor_summary":
         company = str(args.get("company", "")).strip()
@@ -119,6 +124,8 @@ def execute_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
         return {
             "company": company,
             "summary": f"{company} focuses on SMB workflows and competes on ease-of-use and lower onboarding friction.",
+            "demo_stub": True,
+            "note": "Demo placeholder competitor summary. Replace with real data sources in production.",
         }
 
     if name == "unit_economics_calculator":

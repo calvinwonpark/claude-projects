@@ -1,45 +1,9 @@
 import hashlib
-import os
 import re
 from abc import ABC, abstractmethod
-from collections import OrderedDict
-from dataclasses import dataclass
-from typing import Any
 
-
-@dataclass
-class CacheItem:
-    value: list[float]
-    expires_at: float
-
-
-class LruTtlCache:
-    def __init__(self, max_size: int, ttl_seconds: int) -> None:
-        self.max_size = max(1, max_size)
-        self.ttl_seconds = max(1, ttl_seconds)
-        self._store: OrderedDict[str, CacheItem] = OrderedDict()
-
-    def _now(self) -> float:
-        import time
-
-        return time.time()
-
-    def get(self, key: str) -> list[float] | None:
-        item = self._store.get(key)
-        if not item:
-            return None
-        if item.expires_at <= self._now():
-            self._store.pop(key, None)
-            return None
-        self._store.move_to_end(key)
-        return item.value
-
-    def set(self, key: str, value: list[float]) -> None:
-        self._store[key] = CacheItem(value=value, expires_at=self._now() + self.ttl_seconds)
-        self._store.move_to_end(key)
-        while len(self._store) > self.max_size:
-            self._store.popitem(last=False)
-
+from app.config import settings
+from app.utils.cache import LruTtlCache
 
 class EmbeddingsProvider(ABC):
     @abstractmethod
@@ -49,12 +13,22 @@ class EmbeddingsProvider(ABC):
     def embed_texts(self, texts: list[str]) -> list[list[float]]:
         return [self.embed_text(t) for t in texts]
 
+    @property
+    def provider_id(self) -> str:
+        return self.__class__.__name__.lower()
+
+    @property
+    def model_name(self) -> str:
+        return "unknown"
+
 
 class LocalHashEmbeddingsProvider(EmbeddingsProvider):
     """Deterministic local embedding for demo portability."""
 
     def __init__(self, dim: int = 256) -> None:
         self.dim = dim
+        self._provider_id = "hash"
+        self._model_name = f"local_hash_{dim}"
 
     def embed_text(self, text: str) -> list[float]:
         vec = [0.0] * self.dim
@@ -69,6 +43,14 @@ class LocalHashEmbeddingsProvider(EmbeddingsProvider):
             vec = [v / norm for v in vec]
         return vec
 
+    @property
+    def provider_id(self) -> str:
+        return self._provider_id
+
+    @property
+    def model_name(self) -> str:
+        return self._model_name
+
 
 class OpenAIEmbeddingsProvider(EmbeddingsProvider):
     def __init__(self, api_key: str, model: str, dim: int) -> None:
@@ -77,10 +59,19 @@ class OpenAIEmbeddingsProvider(EmbeddingsProvider):
         self._client = OpenAI(api_key=api_key)
         self._model = model
         self._dim = dim
+        self._provider_id = "openai"
 
     def embed_text(self, text: str) -> list[float]:
         resp = self._client.embeddings.create(model=self._model, input=text, dimensions=self._dim)
         return list(resp.data[0].embedding)
+
+    @property
+    def provider_id(self) -> str:
+        return self._provider_id
+
+    @property
+    def model_name(self) -> str:
+        return self._model
 
 
 class GeminiEmbeddingsProvider(EmbeddingsProvider):
@@ -89,12 +80,21 @@ class GeminiEmbeddingsProvider(EmbeddingsProvider):
 
         self._client = genai.Client(api_key=api_key)
         self._model = model
+        self._provider_id = "gemini"
 
     def embed_text(self, text: str) -> list[float]:
         result = self._client.models.embed_content(model=self._model, contents=text)
         emb = result.embeddings[0]
         vals = getattr(emb, "values", None) or getattr(emb, "embedding", None) or []
         return [float(x) for x in list(vals)]
+
+    @property
+    def provider_id(self) -> str:
+        return self._provider_id
+
+    @property
+    def model_name(self) -> str:
+        return self._model
 
 
 class LocalSentenceTransformerEmbeddingsProvider(EmbeddingsProvider):
@@ -103,6 +103,8 @@ class LocalSentenceTransformerEmbeddingsProvider(EmbeddingsProvider):
 
         self._model = SentenceTransformer(model_name)
         self._dim = dim
+        self._provider_id = "local"
+        self._model_name = model_name
 
     def _norm_dim(self, vec: list[float]) -> list[float]:
         if len(vec) == self._dim:
@@ -119,11 +121,19 @@ class LocalSentenceTransformerEmbeddingsProvider(EmbeddingsProvider):
         vectors = self._model.encode(texts).tolist()
         return [self._norm_dim([float(v) for v in vec]) for vec in vectors]
 
+    @property
+    def provider_id(self) -> str:
+        return self._provider_id
+
+    @property
+    def model_name(self) -> str:
+        return self._model_name
+
 
 class CachedEmbeddingsProvider(EmbeddingsProvider):
     def __init__(self, inner: EmbeddingsProvider, ttl_seconds: int, max_size: int) -> None:
         self._inner = inner
-        self._cache = LruTtlCache(max_size=max_size, ttl_seconds=ttl_seconds)
+        self._cache = LruTtlCache[list[float]](max_size=max_size, ttl_seconds=ttl_seconds)
 
     @staticmethod
     def _key(text: str) -> str:
@@ -141,31 +151,43 @@ class CachedEmbeddingsProvider(EmbeddingsProvider):
     def embed_texts(self, texts: list[str]) -> list[list[float]]:
         return [self.embed_text(t) for t in texts]
 
+    @property
+    def provider_id(self) -> str:
+        return self._inner.provider_id
+
+    @property
+    def model_name(self) -> str:
+        return self._inner.model_name
+
+
+def embedding_provider_identity(provider: EmbeddingsProvider) -> str:
+    return f"{provider.provider_id}:{provider.model_name}"
+
 
 def build_embeddings_provider() -> EmbeddingsProvider:
-    provider = os.getenv("EMBEDDING_PROVIDER", "local").lower()
-    vector_dim = int(os.getenv("VECTOR_DIM", "1536"))
+    provider = settings.embedding_provider.lower()
+    vector_dim = settings.vector_dim
 
     if provider == "openai":
-        key = os.getenv("OPENAI_API_KEY", "").strip()
+        key = settings.openai_api_key
         if not key:
             raise ValueError("OPENAI_API_KEY is required when EMBEDDING_PROVIDER=openai")
-        model = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
+        model = settings.openai_embedding_model
         base: EmbeddingsProvider = OpenAIEmbeddingsProvider(key, model, vector_dim)
     elif provider == "gemini":
-        key = os.getenv("GEMINI_API_KEY", "").strip()
+        key = settings.gemini_api_key
         if not key:
             raise ValueError("GEMINI_API_KEY is required when EMBEDDING_PROVIDER=gemini")
-        model = os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001")
+        model = settings.gemini_embedding_model
         base = GeminiEmbeddingsProvider(key, model)
     elif provider == "local":
-        model_name = os.getenv("LOCAL_EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
+        model_name = settings.local_embedding_model
         base = LocalSentenceTransformerEmbeddingsProvider(model_name=model_name, dim=vector_dim)
     elif provider == "hash":
         base = LocalHashEmbeddingsProvider(dim=vector_dim)
     else:
         raise ValueError("EMBEDDING_PROVIDER must be one of: openai, gemini, local, hash")
 
-    ttl = int(os.getenv("EMBEDDING_CACHE_TTL_SECONDS", "86400"))
-    size = int(os.getenv("EMBEDDING_CACHE_MAX_SIZE", "5000"))
+    ttl = settings.embedding_cache_ttl_seconds
+    size = settings.embedding_cache_max_size
     return CachedEmbeddingsProvider(inner=base, ttl_seconds=ttl, max_size=size)

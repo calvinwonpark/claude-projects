@@ -299,12 +299,27 @@ def _verification_from_tool_results(
 ) -> str:
     if not tool_results:
         return "not_applicable" if verification == "verified" else verification
-    joined = json.dumps(tool_results, ensure_ascii=False).lower()
-    has_stub_marker = ("stubbed estimate" in joined) or ("stubbed" in joined) or ("demo" in joined)
-    hardcoded_stub_tools = any(tr.get("name") in {"market_size_lookup", "competitor_summary"} for tr in tool_results)
-    if has_stub_marker or hardcoded_stub_tools:
+    if _has_demo_stub_tool_results(tool_results):
         return "demo_mode"
     return verification
+
+
+def _has_demo_stub_tool_results(tool_results: list[dict[str, Any]]) -> bool:
+    for tr in tool_results:
+        output = tr.get("output")
+        if isinstance(output, dict) and bool(output.get("demo_stub")):
+            return True
+    return False
+
+
+def _append_demo_stub_disclaimer(answer: str, tool_results: list[dict[str, Any]]) -> str:
+    if not _has_demo_stub_tool_results(tool_results):
+        return answer
+    note = "(Note: market sizing/competitor outputs are demo placeholders; replace with real data sources in production.)"
+    txt = (answer or "").strip()
+    if note in txt:
+        return txt
+    return f"{txt}\n\n{note}".strip()
 
 
 def _safe_upload_doc_id(filename: str, idx: int) -> str:
@@ -949,6 +964,7 @@ async def _run_chat(
     visualization = _build_visualization_from_upload_docs(upload_docs) if _is_chart_request(effective_user_msg) else None
     final_answer = _normalize_answer_for_visualization(final_answer, visualization)
     verification = _verification_from_tool_results(verification, tool_results)
+    final_answer = _append_demo_stub_disclaimer(final_answer, tool_results)
 
     if stream:
         if strict_mode and strict_stream_buffered:

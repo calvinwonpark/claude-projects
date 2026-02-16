@@ -49,6 +49,9 @@ ROUTER_AUTO_GAP=0.20
 ROUTER_AUTO_MID_CONF=0.45
 TOOL_MAX_ITERS=3
 TOOL_TIMEOUT_MS=3000
+# DEMO tool note:
+# market_size_lookup and competitor_summary are demo placeholders.
+# If invoked, verification is set to demo_mode.
 LOG_LEVEL=INFO
 ENABLE_AUDIT_LOGS=true
 
