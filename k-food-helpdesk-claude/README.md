@@ -106,6 +106,15 @@ Metrics:
 - `groundedness_rate`
 - retrieval/generation latency p50/p95
 
+## Workshops
+
+These workshop artifacts model how an Applied AI engineer can guide enterprise teams through discovery -> pilot -> evals -> rollout for this project:
+
+- `workshops/customer_workshop_outline.md`
+- `workshops/pilot_success_criteria.md`
+- `workshops/demo_script.md`
+- `workshops/failure_modes_and_mitigations.md`
+
 ## Enterprise Deployment Patterns
 
 - **Auth mode**

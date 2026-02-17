@@ -131,6 +131,15 @@ Outputs:
 - query/retrieval cache hit rates surfaced in `/api/metrics`
 - dedupe indexing by `content_hash` avoids re-embedding unchanged chunks
 
+## Workshops
+
+These docs model how an Applied AI engineer can guide enterprise customers from discovery -> pilot -> evals -> rollout for this repo:
+
+- `workshops/customer_workshop_outline.md`
+- `workshops/pilot_success_criteria.md`
+- `workshops/demo_script.md`
+- `workshops/failure_modes_and_mitigations.md`
+
 ## Tradeoffs
 
 - `pgvector` is simple/local-first; managed vector DB scales operationally better at high QPS.
