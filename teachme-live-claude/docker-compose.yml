@@ -1,0 +1,20 @@
+services:
+  web:
+    build: .
+    container_name: teachme_live_web_claude
+    env_file:
+      - .env
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-credentials.json
+    ports:
+      - "8000:8000"        # host:container
+    volumes:
+      - ./uploads:/app/uploads
+      - ./static:/app/static
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/gcp-credentials.json:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/ || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 10
