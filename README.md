@@ -1,87 +1,92 @@
 # Claude Production Systems — Applied AI Portfolio
 
-This monorepo contains four production-style Claude projects built to reflect real deployment conditions rather than toy demos. The systems prioritize inspectability over abstraction, bounded behavior over unconstrained autonomy, and measurable performance over anecdotal quality.
-These systems are intentionally designed as applied deployment models rather than research experiments, prioritizing inspectability, safety boundaries, and measurable performance under real-world constraints.
+This repository contains four production-grade Claude projects that model the full lifecycle of enterprise AI adoption: from technical discovery and architecture design through pilot evaluation, deployment, and operational governance.
 
-Across projects, the implementation focus is consistent: grounded RAG pipelines, structured agent behavior, measurable eval harnesses, and deployment-ready infrastructure. Each project includes explicit controls for refusal behavior, citation integrity, and fallback handling, with metrics and traces that make system decisions inspectable.
+The systems prioritize inspectability over abstraction, bounded behavior over unconstrained autonomy, and measurable performance over anecdotal quality. They are designed as applied deployment models rather than research experiments — reflecting the work of advising customer engineering teams on how to ship products with Claude safely and effectively.
 
-The repository is designed to model enterprise adoption patterns: pilot-friendly architecture, configurable policy modes, cost-aware operation, and clear pathways from local development to production governance.
+Each project addresses a distinct deployment pattern (multi-agent RAG, domain helpdesk, realtime voice, evaluation infrastructure) while sharing consistent engineering principles: grounded retrieval, structured tool use, citation enforcement, eval-first development, and cost-aware operation. The accompanying workshop artifacts, pilot packs, and evaluation suites model the customer-facing deliverables that bridge technical implementation and business outcomes.
+
+## How These Projects Map to Customer Engagements
+
+| Project | Customer Pattern | Key Capabilities Demonstrated |
+|---------|-----------------|-------------------------------|
+| `founder-copilot-claude` | Multi-agent advisory product | Routing strategies, tool loops, citation grounding, structured traces |
+| `k-food-helpdesk-claude` | Enterprise knowledge/support system | Domain RAG, strict citation policy, refusal handling, audit logging |
+| `teachme-live-claude` | Realtime interactive application | WebSocket streaming, turn control, latency budgeting, barge-in safety |
+| `claude-eval-kit` | Evaluation and pilot infrastructure | Typed eval framework, acceptance gates, regression diffing, pilot reporting |
 
 ## Architectural Themes
 
-- **Claude-native runtime patterns**: Anthropic Messages integration with streaming and bounded tool-use loops.
-- **RAG infrastructure**: pgvector-backed retrieval, rerank/fallback logic, and context budgeting for grounded responses.
-- **Tool gating and structure**: intent-aware tool invocation, strict schemas, and structured output contracts.
-- **Eval-first engineering**: retrieval-only and full modes for low-cost regression checks and behavior validation.
-- **Safety and grounding**: strict/lenient citation policies, refusal handling, and unsupported-claim controls.
-- **Cost controls**: cache layers, embedding dedupe, model fallback strategy, and selective paid-eval usage.
-- **Observability by default**: routing traces, latency breakdowns, audit logs, and metrics endpoints.
-- **Deployment readiness**: environment-driven config, Docker workflows, and auth-ready architecture for multi-tenant evolution.
+These patterns recur across projects and reflect the implementation guidance an Applied AI engineer would provide to customer teams:
 
-Across projects, architecture decisions are made as explicit tradeoffs between model capability, latency, cost, and safety posture. Each system exposes policy toggles and instrumentation so these tradeoffs stay visible, testable, and measurable rather than implicit.
+- **Claude Messages API integration**: streaming, non-streaming, and bounded tool-use loops with retry/fallback.
+- **RAG pipelines**: pgvector retrieval, reranking, lexical fallback, context budgeting, and cache-aware performance.
+- **Tool gating**: intent-aware invocation, strict schemas, structured output contracts, and verification semantics.
+- **Evaluation frameworks**: offline (deterministic, zero-cost) and online (judge-scored) modes for regression and quality measurement.
+- **Safety and grounding**: strict/lenient citation policies, refusal correctness, unsupported-claim controls, and prompt injection resistance.
+- **Cost controls**: embedding/retrieval caches, model fallback chains, retrieval-only eval modes, and token budgeting.
+- **Observability**: routing traces, latency breakdowns, audit logs, and metrics endpoints for operational governance.
+- **Deployment readiness**: environment-driven config, Docker workflows, auth scaffolding, and multi-tenant evolution paths.
+
+Architecture decisions are made as explicit tradeoffs between model capability, latency, cost, and safety posture. Each system exposes policy toggles and instrumentation so these tradeoffs stay visible, testable, and measurable.
 
 ## Project Overviews
 
-## founder-copilot-claude
+### founder-copilot-claude
 
-`founder-copilot-claude` is a multi-agent decision system for startup execution workflows. It routes queries across investor, technical, and marketing perspectives, then combines retrieval-grounded context with Claude reasoning and controlled tool calls.
+Multi-agent decision system for startup execution workflows. Routes queries across investor, technical, and marketing perspectives using retrieval-grounded context and controlled tool calls.
 
-Core characteristics:
-- Multi-agent routing strategies (`winner_take_all`, `consult_then_decide`, `ensemble_vote`) with routing traces.
-- Tool-loop support for structured tasks (for example, unit economics and market-size style operations) with explicit verification semantics.
-- Citation-grounded generation and policy-driven refusal when evidence quality is insufficient.
-- Evaluation support includes retrieval recall@k and MRR tracking, citation-claim alignment checks, routing consistency across temperature seeds, tool invocation accuracy (precision and false-positive rate), and p50/p95 latency regressions.
-- Enterprise-style telemetry and safety controls through audit logs, policy modes, and config-driven runtime limits.
-
-This project emphasizes guiding startups through structured decision-making with Claude, while keeping system behavior inspectable and measurable.
+- Routing strategies (`winner_take_all`, `consult_then_decide`, `ensemble_vote`) with full routing traces.
+- Tool-loop with explicit verification semantics (unit economics, market sizing) and demo-stub hygiene.
+- Citation-grounded generation with policy-driven refusal when evidence is insufficient.
+- Evaluation: retrieval recall@k, MRR, citation-claim alignment, routing consistency, tool invocation accuracy, p50/p95 latency regressions.
+- Workshop artifacts: customer workshop outline, pilot success criteria, demo script, failure modes analysis.
 
 ---
 
-## k-food-helpdesk-claude
+### k-food-helpdesk-claude
 
-`k-food-helpdesk-claude` is a domain-specific enterprise helpdesk system centered on policy-grounded answers. It combines retrieval pipelines, citation enforcement, and safe response policies to reduce unsupported support outputs.
+Domain-specific enterprise helpdesk with policy-grounded answers, citation enforcement, and safe response policies.
 
-Core characteristics:
-- Domain-focused RAG architecture over helpdesk policies and catalog data.
-- Citation enforcement modes (`strict` and `lenient`) with explicit groundedness behavior.
-- Structured response behavior and refusal handling for unsupported queries.
-- Retrieval architecture with pgvector, reranking, lexical fallback, and cache-aware performance tuning.
-- Tool/operation discipline and eval coverage to prevent unnecessary complexity in policy-first workflows.
-- Metrics and eval outputs include unsupported claim rate, citation coverage percentage, retrieval hit rate, refusal correctness rate, and latency p50/p95.
-
-This project emphasizes designing grounded, reliable enterprise knowledge systems with Claude.
+- RAG architecture over helpdesk policies and catalog data with reranking and lexical fallback.
+- Citation enforcement modes (`strict`/`lenient`) with explicit groundedness behavior.
+- Refusal handling for unsupported queries and out-of-scope requests.
+- Evaluation: unsupported claim rate, citation coverage, retrieval hit rate, refusal correctness rate, latency p50/p95.
+- Workshop artifacts: customer workshop outline, pilot criteria, demo script, failure modes analysis.
 
 ---
 
-## teachme-live-claude
+### teachme-live-claude
 
-`teachme-live-claude` is a realtime tutoring system that demonstrates low-latency voice interaction with strict runtime controls. It implements a live STT -> Claude -> TTS loop with true incremental model streaming and turn-safe interruption behavior.
+Realtime voice tutoring system with low-latency streaming, turn control, and production safety constraints.
 
-Core characteristics:
-- WebSocket-based realtime pipeline with true token delta streaming (`LLM_DELTA`).
-- End-to-end audio workflow: speech capture, transcription, Claude generation, and synthesized playback.
-- Turn controller with interruption handling, cancellation, and race-safe generation lifecycle.
-- Latency budgeting with tracked p50/p95 end-to-end turn time (STT -> LLM -> TTS) and timeout fallback modes.
-- Safety controls for low-confidence transcripts (thresholded handling), image-grounding constraints, and structured tutoring outputs.
-- Eval and observability hooks for streaming token delay, cancellation success rate, transcript confidence threshold behavior, and realtime reliability metrics.
-
-This project emphasizes low-latency, interactive AI systems that remain production-safe under live user behavior.
+- WebSocket pipeline with true token delta streaming (`LLM_DELTA`) and STT -> Claude -> TTS audio loop.
+- Turn controller with barge-in interruption, per-turn cancellation tokens, and race-safe generation lifecycle.
+- Latency budgeting with tracked p50/p95 end-to-end turn time and timeout fallback modes.
+- Safety: low-confidence transcript thresholds, image-grounding constraints, structured tutoring output contracts.
+- Evaluation: streaming token delay, cancellation success rate, transcript confidence behavior, format validity.
 
 ---
 
-## claude-eval-kit
+### claude-eval-kit
 
-`claude-eval-kit` is a standalone evaluation framework for Claude-powered systems. It provides typed case definitions, pluggable adapters, deterministic and judge-based scoring, regression diffing, and a pilot evaluation pack with machine-readable acceptance gates.
+Standalone evaluation framework for Claude-powered systems with typed case definitions, pluggable adapters, and a pilot evaluation pack.
 
-Core characteristics:
-- Adapter-based execution: run cases against an HTTP endpoint, directly via Anthropic API, or with an offline stub for framework testing.
-- Mode-separated scoring: offline mode applies deterministic checks only (no API cost); online mode adds rubric-driven LLM judge scoring.
-- Deterministic scorers for format validity, refusal correctness, citation detection, tool precision/recall, retrieval recall@k, MRR, and prompt injection resistance.
-- Regression diffing against stored baselines with configurable thresholds and CI-compatible exit codes.
-- Pilot evaluation pack with go/no-go acceptance gates, curated datasets (core, injection, refusal), stakeholder report generation, and a structured 2-4 week pilot plan.
-- CLI commands: `evalkit run`, `evalkit report`, `evalkit diff`, `evalkit gate`, `evalkit pilot-report`.
+- Adapter-based execution: HTTP endpoint, direct Anthropic API, or offline stub. MODE controls scoring, not execution.
+- Deterministic scorers: format validity, refusal correctness, citation detection, tool precision/recall, retrieval recall@k, MRR, prompt injection resistance.
+- Judge scoring: YAML rubric-driven LLM evaluation for groundedness, helpfulness, tool use, and refusal quality.
+- Regression diffing with configurable thresholds and CI-compatible exit codes.
+- Pilot pack: acceptance gates (`evalkit gate`), stakeholder reports (`evalkit pilot-report`), curated datasets, and a 2-4 week pilot plan.
 
-This project emphasizes systematic evaluation infrastructure for enterprise Claude deployments: measurable quality gates, reproducible runs, and customer-ready pilot artifacts.
+## Customer Engagement Model
+
+Each project includes workshop and pilot artifacts that model how a Product Engineer on the Applied AI team would guide customers from discovery through deployment:
+
+- **Discovery**: workshop outlines with stakeholder mapping, business alignment questions, and architecture whiteboarding templates.
+- **Pilot design**: measurable success criteria, 2-4 week eval plans, acceptance gates with go/no-go thresholds.
+- **Implementation guidance**: architecture decisions documented as explicit tradeoffs; routing traces and metrics endpoints that make system behavior inspectable during code reviews.
+- **Evaluation**: eval suites that test retrieval quality, citation integrity, tool discipline, refusal correctness, and injection resistance — runnable offline for low-cost regression checks.
+- **Rollout readiness**: failure mode analysis, policy toggle documentation, and production monitoring recommendations.
 
 ## Deployment & Engineering Practices
 
@@ -93,21 +98,12 @@ This project emphasizes systematic evaluation infrastructure for enterprise Clau
 - **Cost-aware architecture** through cache layers, retrieval controls, model fallback, and targeted eval spend.
 - **Production-grade streaming patterns** with cancellation safety, buffering strategy, and explicit protocol events.
 
-## Pilot & Rollout Model
-
-- **2-4 week pilot structure** with scoped intents, policy coverage, and weekly KPI reviews.
-- **Low-cost regression loop** using retrieval-only eval modes before full model-backed runs.
-- **Policy toggles for rollout maturity** (`strict` vs `lenient` grounding) to phase safety posture by use case.
-- **Instrumentation-led budgeting** with latency, cache, and token/cost signals to tune operating envelopes.
-- **Auth-ready evolution path** (`none|jwt` patterns) for staged multi-tenant deployment.
-
 ## Reliability & Failure Controls
 
 Common failure modes addressed across these systems:
 - retrieval hallucination from low-recall context
 - citation drift between retrieved evidence and generated claims
-- tool over-invocation and unnecessary tool path selection
-- tool loop exhaustion without convergent outputs
+- tool over-invocation and tool loop exhaustion
 - streaming race conditions during cancellation/interruption
 - cross-session cache contamination
 - prompt injection via retrieved documents
@@ -115,7 +111,7 @@ Common failure modes addressed across these systems:
 
 Primary mitigations:
 - retrieval confidence thresholds and fallback policies
-- structured output validation and schema checks
+- structured output validation and schema enforcement
 - bounded tool loops with timeout budgets
 - cancellation-safe streaming lifecycle controls
 - scoped cache keys (tenant/session-aware)
@@ -124,4 +120,4 @@ Primary mitigations:
 
 ## Applied AI Relevance
 
-This portfolio demonstrates practical applied AI engineering in customer-facing contexts: designing pilots, architecting Claude integrations, building evaluation frameworks, making model/tool tradeoffs explicit, and operating safe, scalable LLM systems under real constraints.
+This portfolio reflects the core responsibilities of a Product Engineer on Anthropic's Applied AI team: serving as a technical advisor to customers deploying Claude, architecting solutions that balance capability with safety, developing evaluation frameworks that translate model behavior into measurable business outcomes, and building the implementation patterns and pilot infrastructure that move customers from technical discovery to production deployment.
