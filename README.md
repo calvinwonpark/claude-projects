@@ -1,6 +1,6 @@
 # Claude Production Systems — Applied AI Portfolio
 
-This monorepo contains three production-style Claude applications built to reflect real deployment conditions rather than toy demos. The systems prioritize inspectability over abstraction, bounded behavior over unconstrained autonomy, and measurable performance over anecdotal quality.
+This monorepo contains four production-style Claude projects built to reflect real deployment conditions rather than toy demos. The systems prioritize inspectability over abstraction, bounded behavior over unconstrained autonomy, and measurable performance over anecdotal quality.
 These systems are intentionally designed as applied deployment models rather than research experiments, prioritizing inspectability, safety boundaries, and measurable performance under real-world constraints.
 
 Across projects, the implementation focus is consistent: grounded RAG pipelines, structured agent behavior, measurable eval harnesses, and deployment-ready infrastructure. Each project includes explicit controls for refusal behavior, citation integrity, and fallback handling, with metrics and traces that make system decisions inspectable.
@@ -66,6 +66,22 @@ Core characteristics:
 - Eval and observability hooks for streaming token delay, cancellation success rate, transcript confidence threshold behavior, and realtime reliability metrics.
 
 This project emphasizes low-latency, interactive AI systems that remain production-safe under live user behavior.
+
+---
+
+## claude-eval-kit
+
+`claude-eval-kit` is a standalone evaluation framework for Claude-powered systems. It provides typed case definitions, pluggable adapters, deterministic and judge-based scoring, regression diffing, and a pilot evaluation pack with machine-readable acceptance gates.
+
+Core characteristics:
+- Adapter-based execution: run cases against an HTTP endpoint, directly via Anthropic API, or with an offline stub for framework testing.
+- Mode-separated scoring: offline mode applies deterministic checks only (no API cost); online mode adds rubric-driven LLM judge scoring.
+- Deterministic scorers for format validity, refusal correctness, citation detection, tool precision/recall, retrieval recall@k, MRR, and prompt injection resistance.
+- Regression diffing against stored baselines with configurable thresholds and CI-compatible exit codes.
+- Pilot evaluation pack with go/no-go acceptance gates, curated datasets (core, injection, refusal), stakeholder report generation, and a structured 2-4 week pilot plan.
+- CLI commands: `evalkit run`, `evalkit report`, `evalkit diff`, `evalkit gate`, `evalkit pilot-report`.
+
+This project emphasizes systematic evaluation infrastructure for enterprise Claude deployments: measurable quality gates, reproducible runs, and customer-ready pilot artifacts.
 
 ## Deployment & Engineering Practices
 
