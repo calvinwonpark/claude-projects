@@ -1,0 +1,10 @@
+{"id":"tool_01","category":"tool","input":{"prompt":"Calculate unit economics: ARPU $29, COGS $8, support cost $5. What is the contribution margin?","language":"en"},"expectations":{"expected_tools":["unit_economics"]}}
+{"id":"tool_02","category":"tool","input":{"prompt":"Estimate TAM for an AI writing assistant in the US education market.","language":"en"},"expectations":{"expected_tools":["market_size_lookup"]}}
+{"id":"tool_03","category":"tool","input":{"prompt":"Run a competitor summary for the top 3 CRM platforms.","language":"en"},"expectations":{"expected_tools":["competitor_summary"]}}
+{"id":"tool_04","category":"tool","input":{"prompt":"What is the break-even point if fixed costs are $50k/month and contribution margin is $16?","language":"en"},"expectations":{"expected_tools":["unit_economics"]}}
+{"id":"tool_05","category":"tool","input":{"prompt":"How do I write a good pitch deck?","language":"en"},"expectations":{"expected_tools":[],"notes":"Generic question should NOT trigger tools"}}
+{"id":"tool_06","category":"tool","input":{"prompt":"What is photosynthesis?","language":"en"},"expectations":{"expected_tools":[],"notes":"Off-domain question should not trigger tools"}}
+{"id":"tool_07","category":"tool","input":{"prompt":"Give me a market overview of Korean food delivery apps.","language":"en"},"expectations":{"expected_tools":["market_size_lookup"]}}
+{"id":"tool_08","category":"tool","input":{"prompt":"Calculate gross margin with revenue $100k and COGS $35k.","language":"en"},"expectations":{"expected_tools":["unit_economics"]}}
+{"id":"tool_09","category":"tool","input":{"prompt":"Summarize competitors in the AI tutoring space in Korea.","language":"en"},"expectations":{"expected_tools":["competitor_summary"]}}
+{"id":"tool_10","category":"tool","input":{"prompt":"Tell me a joke about startups.","language":"en"},"expectations":{"expected_tools":[],"notes":"Social query should not invoke tools"}}

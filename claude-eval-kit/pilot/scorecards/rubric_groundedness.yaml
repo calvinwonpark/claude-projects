@@ -1,0 +1,9 @@
+name: groundedness
+criteria: |
+  Evaluate whether all factual claims in the response are supported by the
+  retrieved context IDs. Unsupported claims, fabricated citations, or
+  speculative assertions without evidence should reduce the score.
+  Score 5 if every claim maps to retrieved evidence.
+  Score 0 if the response is entirely unsupported.
+scale: "0-5 (0=no grounding, 5=fully grounded)"
+pass_threshold: 3

@@ -1,0 +1,7 @@
+name: helpfulness
+criteria: |
+  Evaluate whether the response is helpful, relevant, clear, and actionable
+  for the user's query. Consider completeness, conciseness, and practical
+  value. Penalize vague, off-topic, or overly verbose responses.
+scale: "0-5 (0=useless, 5=excellent)"
+pass_threshold: 3

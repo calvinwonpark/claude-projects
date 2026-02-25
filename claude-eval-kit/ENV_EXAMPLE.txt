@@ -1,0 +1,36 @@
+# Copy to .env for local use. Do not commit .env.
+
+# Mode: offline (no API keys needed) | online (requires ANTHROPIC_API_KEY)
+MODE=offline
+
+# Anthropic API key (online mode only)
+ANTHROPIC_API_KEY=
+
+# Judge model used for rubric-based LLM scoring (online mode)
+JUDGE_MODEL=claude-haiku-4-5-20251001
+
+# Target model for direct Anthropic adapter (optional)
+TARGET_MODEL=claude-sonnet-4-5-20250929
+
+# HTTP adapter endpoint (for http_app adapter)
+HTTP_ENDPOINT=http://localhost:8000/api/eval
+
+# Request timeout (seconds)
+TIMEOUT_S=30
+
+# Max concurrent case evaluations
+CONCURRENCY=4
+
+# Limit cases per run (0 = no limit)
+MAX_CASES=0
+
+# Cost estimation overrides (USD per 1K tokens)
+COST_PER_1K_INPUT=0.003
+COST_PER_1K_OUTPUT=0.015
+
+# Paths
+BASELINE_DIR=baselines/main
+RUNS_DIR=runs
+
+# PII/secret sanitization in logs and traces
+SANITIZE_LOGS=true

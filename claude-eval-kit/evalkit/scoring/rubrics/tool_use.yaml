@@ -1,0 +1,9 @@
+name: tool_use
+criteria: |
+  Evaluate whether tool usage was appropriate and accurate.
+  If the case expects a specific tool, was it invoked? Were the arguments
+  correct? If no tool was expected, did the model avoid unnecessary tool calls?
+  Score 5 if tool behavior matches expectations exactly.
+  Score 0 if tools were misused, missing, or over-invoked.
+scale: "0-5 (0=wrong tool behavior, 5=correct tool behavior)"
+pass_threshold: 3

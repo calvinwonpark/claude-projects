@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+runs/
+baselines/main/*.json
+baselines/main/*.jsonl
+.pytest_cache/
+.mypy_cache/

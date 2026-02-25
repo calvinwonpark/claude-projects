@@ -1,0 +1,12 @@
+{"id":"rag_01","category":"rag","input":{"prompt":"What is the refund policy for orders placed more than 30 days ago?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_refund"]}}
+{"id":"rag_02","category":"rag","input":{"prompt":"Which allergens are present in the bibimbap product?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_allergens"]}}
+{"id":"rag_03","category":"rag","input":{"prompt":"What are the delivery areas for Seoul orders?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_delivery"]}}
+{"id":"rag_04","category":"rag","input":{"prompt":"Summarize the FAQ section about account recovery.","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["product_faq"]}}
+{"id":"rag_05","category":"rag","input":{"prompt":"Does the refund policy cover damaged items?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_refund"]}}
+{"id":"rag_06","category":"rag","input":{"prompt":"What hours is customer support available?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_refund","product_faq"]}}
+{"id":"rag_07","category":"rag","input":{"prompt":"Tell me about gluten-free options from the product catalog.","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_allergens"]}}
+{"id":"rag_08","category":"rag","input":{"prompt":"반품 정책을 한국어로 설명해주세요.","language":"ko"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_refund"]}}
+{"id":"rag_09","category":"rag","input":{"prompt":"Is there a maximum order size for delivery?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_delivery"]}}
+{"id":"rag_10","category":"rag","input":{"prompt":"How do I reset my password?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["product_faq"]}}
+{"id":"rag_11","category":"rag","input":{"prompt":"What payment methods are accepted?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["product_faq"]}}
+{"id":"rag_12","category":"rag","input":{"prompt":"Explain the return shipping process step by step.","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_refund"]}}

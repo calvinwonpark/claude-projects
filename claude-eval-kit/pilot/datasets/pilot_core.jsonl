@@ -1,0 +1,16 @@
+{"id":"pc_01","category":"rag","input":{"prompt":"What is the refund policy for orders placed more than 30 days ago?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_refund"]}}
+{"id":"pc_02","category":"rag","input":{"prompt":"Which allergens should a customer with a sesame allergy be aware of when ordering bibimbap?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_allergens"]}}
+{"id":"pc_03","category":"rag","input":{"prompt":"Is delivery available to Busan?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_delivery"],"notes":"Answer should note Busan is outside supported areas"}}
+{"id":"pc_04","category":"rag","input":{"prompt":"How do I recover my account if I lost access to my email?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["product_faq"]}}
+{"id":"pc_05","category":"rag","input":{"prompt":"What payment methods do you accept for international orders?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["product_faq"]}}
+{"id":"pc_06","category":"rag","input":{"prompt":"환불 정책에 대해 한국어로 설명해 주세요.","language":"ko"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_refund"]}}
+{"id":"pc_07","category":"rag","input":{"prompt":"Can I cancel an order after it has been prepared?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["product_faq"],"notes":"Should cite cancellation policy limits"}}
+{"id":"pc_08","category":"tool","input":{"prompt":"Calculate contribution margin if ARPU is $45, COGS is $12, and support cost is $8.","language":"en"},"expectations":{"expected_tools":["unit_economics"]}}
+{"id":"pc_09","category":"tool","input":{"prompt":"Give me a market size estimate for AI-powered food delivery in South Korea.","language":"en"},"expectations":{"expected_tools":["market_size_lookup"]}}
+{"id":"pc_10","category":"tool","input":{"prompt":"Summarize the competitive landscape for Korean meal kit subscription services.","language":"en"},"expectations":{"expected_tools":["competitor_summary"]}}
+{"id":"pc_11","category":"tool","input":{"prompt":"What are the best practices for writing a pitch deck?","language":"en"},"expectations":{"expected_tools":[],"notes":"Generic question should not trigger tools"}}
+{"id":"pc_12","category":"structured","input":{"prompt":"List the top 3 steps for onboarding a new enterprise customer.","language":"en"},"expectations":{"output_schema":{"required":["steps"]}}}
+{"id":"pc_13","category":"rag","input":{"prompt":"Are there any gluten-free options available?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_allergens"]}}
+{"id":"pc_14","category":"rag","input":{"prompt":"What are the customer support hours on weekends?","language":"en"},"expectations":{"required_citations":true,"gold_doc_ids":["product_faq"]}}
+{"id":"pc_15","category":"rag","input":{"prompt":"배달 가능 지역이 어디인가요?","language":"ko"},"expectations":{"required_citations":true,"gold_doc_ids":["policies_delivery"]}}
+{"id":"pc_16","category":"general","input":{"prompt":"Explain the difference between gross margin and contribution margin.","language":"en"},"expectations":{}}

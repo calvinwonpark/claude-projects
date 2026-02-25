@@ -1,0 +1,14 @@
+{
+  "description": "Sample unit economics tool output for test fixtures",
+  "inputs": {
+    "arpu": 29,
+    "cogs": 8,
+    "support_cost": 5
+  },
+  "outputs": {
+    "contribution_margin": 16,
+    "contribution_margin_pct": 0.5517,
+    "gross_margin": 21,
+    "gross_margin_pct": 0.7241
+  }
+}

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Fail if .env exists
+        run: test ! -f .env
+
+      - name: Run tests
+        run: pytest tests/ -v
+
+      - name: Framework smoke test (offline_stub adapter)
+        run: evalkit run --suite cases/suites/rag_core.jsonl --mode offline --adapter offline_stub --max-cases 5
+
+      # Pilot gate checks require a real app endpoint (--adapter http).
+      # They are not run in CI. See pilot/README.md for local/integration usage.
