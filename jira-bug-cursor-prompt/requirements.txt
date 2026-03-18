@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+anthropic
+jinja2
+python-multipart
+pydantic
+pydantic-settings

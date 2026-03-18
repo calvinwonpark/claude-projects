@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jira Bug → Cursor Prompt</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      line-height: 1.5;
+      padding: 2rem 1rem;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      color: #6e6e73;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border: 1px solid #d2d2d7;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input[type="text"]:focus { border-color: #0071e3; }
+
+    button {
+      padding: 0.65rem 1.5rem;
+      background: #0071e3;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    button:hover { background: #0060c0; }
+    button:disabled { background: #a1a1a6; cursor: not-allowed; }
+
+    .hint { font-size: 0.82rem; color: #86868b; margin-top: -1rem; margin-bottom: 1.5rem; }
+
+    .error {
+      background: #fff0f0;
+      border: 1px solid #ff3b30;
+      color: #c00;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      background: #fff;
+      border: 1px solid #e5e5ea;
+      border-radius: 10px;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: #fafafa;
+      border-bottom: 1px solid #e5e5ea;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .section-header h2 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+
+    .section-header .toggle {
+      font-size: 0.8rem;
+      color: #86868b;
+    }
+
+    .section-body {
+      padding: 1rem;
+      display: none;
+    }
+
+    .section-body.open { display: block; }
+
+    .section-body pre {
+      background: #f5f5f7;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .prompt-section .section-body { display: block; }
+
+    .copy-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.5rem;
+    }
+
+    .copy-btn {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.82rem;
+      background: #1d1d1f;
+    }
+
+    .copy-btn:hover { background: #333; }
+
+    .domain-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .domain-tag {
+      display: inline-block;
+      background: #e8f0fe;
+      color: #174ea6;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 0.4rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Jira Bug → Cursor Prompt</h1>
+    <p class="subtitle">Paste a Jira issue key to generate a Cursor-ready debugging prompt</p>
+
+    <form id="form">
+      <div class="input-row">
+        <input type="text" id="issueKey" placeholder="e.g. DR-1042" autocomplete="off" required />
+        <button type="submit" id="submitBtn">Generate Prompt</button>
+      </div>
+    </form>
+    <p class="hint">Mock mode — try <strong>DR-1042</strong></p>
+
+    <div id="error" class="error" style="display:none"></div>
+    <div id="results" style="display:none">
+
+      <div class="section prompt-section">
+        <div class="section-header">
+          <h2>Generated Cursor Prompt</h2>
+        </div>
+        <div class="section-body open">
+          <div class="copy-row">
+            <button class="copy-btn" onclick="copyPrompt()">Copy to Clipboard</button>
+          </div>
+          <pre id="promptOutput"></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>Detected Domains</h2>
+          <span class="toggle">▸</span>
+        </div>
+        <div class="section-body">
+          <div id="domainsOutput" class="domain-tags"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>Matched Knowledge Docs</h2>
+          <span class="toggle">▸</span>
+        </div>
+        <div class="section-body">
+          <pre id="docsOutput"></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>Normalized Bug</h2>
+          <span class="toggle">▸</span>
+        </div>
+        <div class="section-body">
+          <pre id="normalizedOutput"></pre>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h2>Raw Jira Data</h2>
+          <span class="toggle">▸</span>
+        </div>
+        <div class="section-body">
+          <pre id="rawOutput"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("form");
+    const issueKey = document.getElementById("issueKey");
+    const submitBtn = document.getElementById("submitBtn");
+    const errorEl = document.getElementById("error");
+    const results = document.getElementById("results");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const key = issueKey.value.trim();
+      if (!key) return;
+
+      errorEl.style.display = "none";
+      results.style.display = "none";
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner"></span>Generating…';
+
+      try {
+        const res = await fetch("/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ issue_key: key }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.detail || "Request failed");
+        }
+
+        document.getElementById("promptOutput").textContent = data.generated_prompt;
+
+        const domainsEl = document.getElementById("domainsOutput");
+        domainsEl.innerHTML = data.detected_domains
+          .map((d) => `<span class="domain-tag">${d}</span>`)
+          .join("");
+
+        const docPaths = data.matched_docs.map((d) => d.file_path);
+        document.getElementById("docsOutput").textContent = docPaths.join("\n");
+
+        document.getElementById("normalizedOutput").textContent =
+          JSON.stringify(data.normalized_bug, null, 2);
+
+        document.getElementById("rawOutput").textContent =
+          JSON.stringify(data.raw_bug, null, 2);
+
+        results.style.display = "block";
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = "block";
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Generate Prompt";
+      }
+    });
+
+    function toggleSection(header) {
+      const body = header.nextElementSibling;
+      const toggle = header.querySelector(".toggle");
+      const open = body.classList.toggle("open");
+      toggle.textContent = open ? "▾" : "▸";
+    }
+
+    function copyPrompt() {
+      const text = document.getElementById("promptOutput").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector(".copy-btn");
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = "Copy to Clipboard"; }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
