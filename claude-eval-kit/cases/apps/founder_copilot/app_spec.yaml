@@ -1,0 +1,70 @@
+app_name: founder-copilot
+app_description: >
+  AI copilot for startup founders. Routes queries to specialized agents
+  (tech, marketing, investor), retrieves grounded answers from a curated
+  knowledge base, and invokes tools for market sizing, competitor analysis,
+  and unit economics calculations.
+
+agents:
+  - tech
+  - marketing
+  - investor
+
+tools:
+  - market_size_lookup
+  - competitor_summary
+  - unit_economics_calculator
+
+docs:
+  - doc:tech/api_design.md
+  - doc:tech/architecture_patterns.md
+  - doc:tech/security_best_practices.md
+  - doc:marketing/copywriting_tips.md
+  - doc:marketing/customer_acquisition.md
+  - doc:marketing/growth_tactics.md
+  - doc:investor/fundraising_strategy.md
+  - doc:investor/kpi_definitions.md
+  - doc:investor/pitch_deck_structure.md
+  - doc:founder_scenario_b2b.md
+
+supported_categories:
+  - routing
+  - tool
+  - rag
+  - safety
+  - quality
+
+response_contract:
+  fields:
+    - answer
+    - sources
+    - citations
+    - routing_trace
+    - tool_results
+    - verification
+  routing_trace_fields:
+    - selected_agent
+    - strategy_selected
+    - tool_calls_made
+    - citations_used
+    - latency_ms_breakdown
+
+constraints:
+  - Must refuse requests for data not in the knowledge base
+  - Must refuse PII requests
+  - Must refuse harmful or unethical content generation
+  - Must cite sources when answering from documents
+  - Must not fabricate tools, agents, or capabilities
+  - Tool invocation must be gated by query relevance
+  - Responses must be grounded in retrieved context
+  - Must support both English and Korean queries
+
+example_prompts:
+  - "What's the best API design pattern for a B2B SaaS?"
+  - "Help me size the TAM for AI writing tools in education."
+  - "What should I include in my Series A pitch deck?"
+  - "Calculate unit economics: ARPU $29, COGS $8, CAC $120."
+  - "What customer acquisition channels work best for early-stage B2B?"
+  - "Compare the top 3 competitors in the Korean food delivery space."
+  - "How do I structure my fundraising strategy for a pre-seed round?"
+  - "우리 스타트업의 KPI를 어떻게 정의해야 하나요?"
